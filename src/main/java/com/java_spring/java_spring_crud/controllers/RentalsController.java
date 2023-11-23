@@ -3,6 +3,12 @@ package com.java_spring.java_spring_crud.controllers;
 
 import com.java_spring.java_spring_crud.entities.Rental;
 import com.java_spring.java_spring_crud.repositories.RentalRepository;
+import com.java_spring.java_spring_crud.services.abstracts.RentalService;
+import com.java_spring.java_spring_crud.services.dtos.rental.requests.AddRentalRequest;
+import com.java_spring.java_spring_crud.services.dtos.rental.requests.DeleteRentalRequest;
+import com.java_spring.java_spring_crud.services.dtos.rental.requests.GetRentalRequest;
+import com.java_spring.java_spring_crud.services.dtos.rental.requests.UpdateRentalRequest;
+import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRentalResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +17,38 @@ import java.util.List;
 @RequestMapping("api/rentals")
 public class RentalsController
 {
-    private final RentalRepository rentalRepository;
+    private final RentalService rentalService;
 
-    public RentalsController(RentalRepository rentalRepository) {this.rentalRepository = rentalRepository;}
+    public RentalsController(RentalService rentalService) {
+        this.rentalService = rentalService;
+    }
 
+    @GetMapping
+    public List<GetAllRentalResponse> getAll(){
+        return rentalService.getAll();
+    }
+
+    @GetMapping("{id}")
+    public Rental getById(GetRentalRequest request) {
+        return rentalService.getById(request);
+    }
+
+    @PostMapping
+    public void add(@RequestBody AddRentalRequest request) {
+        rentalService.add(request);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteById(DeleteRentalRequest request) {
+        rentalService.deleteById(request);
+    }
+
+    @PutMapping("{id}")
+    public void update(@RequestBody UpdateRentalRequest request) {
+        rentalService.update(request);
+    }
+
+    /*
     @GetMapping
     public List<Rental> getAll() {
         List<Rental> rentals = rentalRepository.findAll();
@@ -43,4 +77,6 @@ public class RentalsController
         rentalToUpdate.setEnd_date(rental.getEnd_date());
         rentalRepository.save(rentalToUpdate);
     }
+
+     */
 }

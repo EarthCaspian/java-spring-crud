@@ -2,7 +2,11 @@ package com.java_spring.java_spring_crud.controllers;
 
 
 import com.java_spring.java_spring_crud.entities.Car;
-import com.java_spring.java_spring_crud.repositories.CarRepository;
+import com.java_spring.java_spring_crud.services.abstracts.CarService;
+import com.java_spring.java_spring_crud.services.dtos.car.requests.AddCarRequest;
+import com.java_spring.java_spring_crud.services.dtos.car.requests.DeleteCarRequest;
+import com.java_spring.java_spring_crud.services.dtos.car.requests.GetCarRequest;
+import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +15,37 @@ import java.util.List;
 @RequestMapping("api/cars")
 public class CarsController
 {
-    private final CarRepository carRepository;
+    private final CarService carService;
 
-    public CarsController(CarRepository carRepository) { this.carRepository = carRepository;}
+    public CarsController(CarService carService) { this.carService = carService;}
 
+
+    @GetMapping
+    public List<String> getAll() {
+       return carService.getAll();
+    }
+
+    @GetMapping("{id}")
+    public Car getById (GetCarRequest request) {
+        return carService.getById(request);
+    }
+
+    @PostMapping
+    public void add(@RequestBody AddCarRequest request) {
+        carService.add(request);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteById(DeleteCarRequest request) {
+        carService.deleteById(request);
+    }
+
+    @PutMapping("{id}")
+    public void updateById(UpdateCarRequest request) {
+        carService.update(request);
+    }
+
+    /*
     @GetMapping
     public List<Car> getAll() {
         List<Car> cars = carRepository.findAll();
@@ -45,4 +76,5 @@ public class CarsController
         carToUpdate.setDailyPrice(car.getDailyPrice());
         carRepository.save(carToUpdate);
     }
+     */
 }

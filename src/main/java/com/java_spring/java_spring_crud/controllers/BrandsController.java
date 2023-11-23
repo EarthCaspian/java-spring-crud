@@ -2,7 +2,11 @@ package com.java_spring.java_spring_crud.controllers;
 
 
 import com.java_spring.java_spring_crud.entities.Brand;
-import com.java_spring.java_spring_crud.repositories.BrandRepository;
+import com.java_spring.java_spring_crud.services.abstracts.BrandService;
+import com.java_spring.java_spring_crud.services.dtos.brand.requests.AddBrandRequest;
+import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrandRequest;
+import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
+import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,12 +16,40 @@ import java.util.List;
 public class BrandsController
 {
 
-    private final BrandRepository brandRepository;
+    private final BrandService brandService;
 
-    public BrandsController(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
+    public BrandsController(BrandService brandService) {
+        this.brandService = brandService;
     }
 
+
+
+    @PostMapping
+    public void add(@RequestBody AddBrandRequest request){
+        brandService.add(request);
+    }
+
+    @GetMapping
+    public List<String> getAll(){
+        return brandService.getAll();
+    }
+
+    @PutMapping("{id}")
+    public void update(UpdateBrandRequest request) {
+        brandService.update(request);
+    }
+
+    @GetMapping("{id}")
+    public Brand getById(GetBrandRequest request) {
+        return brandService.getById(request);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteById(DeleteBrandRequest request){
+        brandService.deleteById(request);
+    }
+
+    /*
     @GetMapping
     public List<Brand> getAll() {
         List<Brand> brands = brandRepository.findAll();
@@ -47,5 +79,5 @@ public class BrandsController
         brandRepository.save(brandToUpdate);
 
     }
-
+    */
 }

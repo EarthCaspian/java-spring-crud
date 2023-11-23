@@ -1,8 +1,11 @@
 package com.java_spring.java_spring_crud.controllers;
 
 import com.java_spring.java_spring_crud.entities.Location;
-import com.java_spring.java_spring_crud.repositories.EmployeeRepository;
-import com.java_spring.java_spring_crud.repositories.LocationRepository;
+import com.java_spring.java_spring_crud.services.abstracts.LocationService;
+import com.java_spring.java_spring_crud.services.dtos.location.requests.AddLocationRequest;
+import com.java_spring.java_spring_crud.services.dtos.location.requests.DeleteLocationRequest;
+import com.java_spring.java_spring_crud.services.dtos.location.requests.GetLocationRequest;
+import com.java_spring.java_spring_crud.services.dtos.location.requests.UpdateLocationRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +14,38 @@ import java.util.List;
 @RequestMapping("api/locations")
 public class LocationsController
 {
-    private final LocationRepository locationRepository;
+    private final LocationService locationService;
 
-    public LocationsController(LocationRepository locationRepository) {this.locationRepository = locationRepository;}
+    public LocationsController(LocationService locationService) {
+        this.locationService = locationService;
+    }
 
+    @GetMapping
+    public List<String> getAll() {
+        return locationService.getAll();
+    }
+
+    @GetMapping("{id}")
+    public Location getById(GetLocationRequest request) {
+       return locationService.getById(request);
+    }
+
+    @PostMapping
+    public void add(@RequestBody AddLocationRequest request) {
+        locationService.add(request);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteById(DeleteLocationRequest request) {
+        locationService.deleteById(request);
+    }
+
+    @PutMapping("{id}")
+    public void update(@RequestBody UpdateLocationRequest request) {
+        locationService.update(request);
+    }
+
+    /*
     @GetMapping
     public List<Location> getAll() {
         List<Location> locations = locationRepository.findAll();
@@ -40,4 +71,6 @@ public class LocationsController
         locationToUpdate.setAddress(location.getAddress());
         locationRepository.save(locationToUpdate);
     }
+
+     */
 }

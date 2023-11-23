@@ -2,7 +2,11 @@ package com.java_spring.java_spring_crud.controllers;
 
 
 import com.java_spring.java_spring_crud.entities.Customer;
-import com.java_spring.java_spring_crud.repositories.CustomerRepository;
+import com.java_spring.java_spring_crud.services.abstracts.CustomerService;
+import com.java_spring.java_spring_crud.services.dtos.customer.requests.AddCustomerRequest;
+import com.java_spring.java_spring_crud.services.dtos.customer.requests.DeleteCustomerRequest;
+import com.java_spring.java_spring_crud.services.dtos.customer.requests.GetCustomerRequest;
+import com.java_spring.java_spring_crud.services.dtos.customer.requests.UpdateCustomerRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +15,38 @@ import java.util.List;
 @RequestMapping("api/customers")
 public class CustomersController
 {
-    private final CustomerRepository customerRepository;
+   private final CustomerService customerService;
 
-    public CustomersController(CustomerRepository customerRepository) {this.customerRepository = customerRepository;}
+    public CustomersController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
+    @GetMapping
+    public List<String> getAll() {
+        return customerService.getAll();
+    }
+
+    @GetMapping("{id}")
+    public Customer getById(GetCustomerRequest request) {
+        return customerService.getById(request);
+    }
+
+    @PostMapping
+    public void add(@RequestBody AddCustomerRequest request) {
+        customerService.add(request);
+    }
+
+    @DeleteMapping
+    public void deleteById(DeleteCustomerRequest request){
+        customerService.deleteById(request);
+    }
+
+    @PutMapping("{id}")
+    public void updateById(UpdateCustomerRequest request) {
+        customerService.update(request);
+    }
+
+   /*
     @GetMapping
     public List<Customer> getAll() {
         List<Customer> customers = customerRepository.findAll();
@@ -40,5 +72,5 @@ public class CustomersController
         customerToUpdate.setPhone(customer.getPhone());
         customerRepository.save(customerToUpdate);
     }
-
+    */
 }

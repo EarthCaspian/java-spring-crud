@@ -6,6 +6,8 @@ import com.java_spring.java_spring_crud.services.dtos.employee.requests.AddEmplo
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.DeleteEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.GetEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.UpdateEmployeeRequest;
+import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeeByRelationResponse;
+import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeePhoneResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,30 +47,13 @@ public class EmployeesController
         employeeService.update(request);
     }
 
-    /*
-    @GetMapping
-    public List<Employee> getAll() {
-        List<Employee> employees = employeeRepository.findAll();
-        return employees;
+    @GetMapping("phoneStarts-with")
+    public List<GetEmployeePhoneResponse> getEmployeePhoneResponses(@RequestParam String phone) {
+       return employeeService.getByPhone(phone);
     }
 
-    @GetMapping("{id}")
-    public Employee getById(@PathVariable int id){return employeeRepository.findById(id).orElseThrow();}
-
-    @PostMapping
-    public void add(@RequestBody Employee employee) {employeeRepository.save(employee);}
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id) {
-        Employee employeeToDelete = employeeRepository.findById(id).orElseThrow();
-        employeeRepository.delete(employeeToDelete);
+    @GetMapping("byCustomerRelation")
+    public List<GetEmployeeByRelationResponse> getEmployeeByRelationResponses(@RequestParam int id) {
+        return employeeService.getByRelation(id);
     }
-
-    @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Employee employee) {
-        Employee employeeToUpdate = employeeRepository.findById(id).orElseThrow();
-        employeeToUpdate.setPhone(employee.getPhone());
-        employeeRepository.save(employeeToUpdate);
-    }
-     */
 }

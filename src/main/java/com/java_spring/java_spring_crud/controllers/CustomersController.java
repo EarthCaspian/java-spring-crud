@@ -7,6 +7,8 @@ import com.java_spring.java_spring_crud.services.dtos.customer.requests.AddCusto
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.DeleteCustomerRequest;
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.GetCustomerRequest;
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.UpdateCustomerRequest;
+import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse;
+import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNameResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,31 +48,13 @@ public class CustomersController
         customerService.update(request);
     }
 
-   /*
-    @GetMapping
-    public List<Customer> getAll() {
-        List<Customer> customers = customerRepository.findAll();
-        return customers;
+    @GetMapping("nameSurname")
+    public List<GetCustomerNameResponse> getCustomerNameResponses (@RequestParam String name) {
+        return customerService.getBySurnameOrName(name);
     }
 
-    @GetMapping("{id}")
-    public Customer getById(@PathVariable int id) {return customerRepository.findById(id).orElseThrow();}
-
-    @PostMapping
-    public void add(@RequestBody Customer customer) {customerRepository.save(customer);}
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id) {
-        Customer customerToDelete = customerRepository.findById(id).orElseThrow();
-        customerRepository.delete(customerToDelete);
+    @GetMapping("getByNIDEndsWith")
+    public List<GetCustomerNIDResponse>  getCustomerNIDResponses(@RequestParam int id){
+        return customerService.getByNIDEndsWith(id);
     }
-
-    @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Customer customer) {
-        Customer customerToUpdate = customerRepository.findById(id).orElseThrow();
-        customerToUpdate.setEmail(customer.getEmail());
-        customerToUpdate.setPhone(customer.getPhone());
-        customerRepository.save(customerToUpdate);
-    }
-    */
 }

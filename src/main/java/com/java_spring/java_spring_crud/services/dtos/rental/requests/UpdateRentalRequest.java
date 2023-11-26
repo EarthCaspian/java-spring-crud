@@ -11,9 +11,9 @@ import java.time.LocalDate;
 @Data
 public class UpdateRentalRequest {
     private int id;
-    private Customer customer_id;
-    private Car car_id;
+    private int customer_id;
+    private int car_id;
     private LocalDate start_date;
     private LocalDate end_date;
-    private Location location_id;
+    private int location_id;
 }

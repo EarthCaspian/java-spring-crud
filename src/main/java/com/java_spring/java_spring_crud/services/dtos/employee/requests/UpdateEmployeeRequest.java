@@ -7,4 +7,5 @@ import lombok.Data;
 public class UpdateEmployeeRequest {
     private int id;
     private String phone;
+    private int customer_relation;
 }

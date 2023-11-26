@@ -9,6 +9,8 @@ import com.java_spring.java_spring_crud.services.dtos.location.requests.AddLocat
 import com.java_spring.java_spring_crud.services.dtos.location.requests.DeleteLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.requests.GetLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.requests.UpdateLocationRequest;
+import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByAddressLength;
+import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,5 +68,15 @@ public class LocationManager implements LocationService {
         return locationRepository.findAll().stream()
                 .map(Location::getName)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GetLocationByManagerResponse> getByManager(int id) {
+        return locationRepository.getByManager(id);
+    }
+
+    @Override
+    public List<GetLocationByAddressLength> getByAddressLength(int length) {
+        return locationRepository.getByAddressLength(length);
     }
 }

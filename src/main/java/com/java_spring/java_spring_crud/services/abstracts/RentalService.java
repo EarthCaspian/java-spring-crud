@@ -6,13 +6,16 @@ import com.java_spring.java_spring_crud.services.dtos.rental.requests.DeleteRent
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.GetRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.UpdateRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRentalResponse;
+import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetRentalByDateResponse;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RentalService {
-    public void add(AddRentalRequest request);
-    public void deleteById(DeleteRentalRequest request);
-    public void update(UpdateRentalRequest request);
-    public Rental getById(GetRentalRequest request);
-    public List<GetAllRentalResponse> getAll();
+    void add(AddRentalRequest request);
+    void deleteById(DeleteRentalRequest request);
+    void update(UpdateRentalRequest request);
+    Rental getById(GetRentalRequest request);
+    List<GetAllRentalResponse> getAll();
+    List<GetRentalByDateResponse> getByDate(LocalDate date);
 }

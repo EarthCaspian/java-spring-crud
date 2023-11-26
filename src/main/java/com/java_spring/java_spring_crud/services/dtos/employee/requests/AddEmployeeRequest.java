@@ -8,4 +8,5 @@ public class AddEmployeeRequest {
     private String name;
     private String surname;
     private String phone;
+    private int customer_relation;
 }

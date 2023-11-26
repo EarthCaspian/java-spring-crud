@@ -7,6 +7,7 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.AddBrandReq
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
+import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,6 +59,16 @@ public class BrandManager implements BrandService {
         Brand brandToDelete = brandRepository.findById(request.getId())
                                              .orElseThrow(() -> new RuntimeException("Marka bulunamadı."));
         brandRepository.delete(brandToDelete);
+    }
+
+    @Override
+    public List<GetListBrandResponse> getByNameDto(String name) {
+        return brandRepository.findByName(name);
+    }
+
+    @Override
+    public List<Brand> getByName(String name) {
+        return brandRepository.findByNameStartsWith(name);
     }
 
 

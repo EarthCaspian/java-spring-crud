@@ -6,6 +6,8 @@ import com.java_spring.java_spring_crud.services.dtos.location.requests.AddLocat
 import com.java_spring.java_spring_crud.services.dtos.location.requests.DeleteLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.requests.GetLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.requests.UpdateLocationRequest;
+import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByAddressLength;
+import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,32 +47,13 @@ public class LocationsController
         locationService.update(request);
     }
 
-    /*
-    @GetMapping
-    public List<Location> getAll() {
-        List<Location> locations = locationRepository.findAll();
-        return locations;
+    @GetMapping("getByManager")
+    public List<GetLocationByManagerResponse> getLocationByManagerResponses (@RequestParam int id) {
+        return locationService.getByManager(id);
     }
 
-    @GetMapping("{id}")
-    public Location getById(@PathVariable int id) {return locationRepository.findById(id).orElseThrow();}
-
-    @PostMapping
-    public void add(@RequestBody Location location) {locationRepository.save(location);}
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id) {
-        Location locationToDelete = locationRepository.findById(id).orElseThrow();
-        locationRepository.delete(locationToDelete);
+    @GetMapping("getByAddressLength")
+    public List<GetLocationByAddressLength> getLocationByAddressLengths(@RequestParam int length) {
+        return locationService.getByAddressLength(length);
     }
-
-    @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Location location) {
-        Location locationToUpdate = locationRepository.findById(id).orElseThrow();
-        locationToUpdate.setName(location.getName());
-        locationToUpdate.setAddress(location.getAddress());
-        locationRepository.save(locationToUpdate);
-    }
-
-     */
 }

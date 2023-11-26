@@ -7,6 +7,8 @@ import com.java_spring.java_spring_crud.services.dtos.customer.requests.AddCusto
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.DeleteCustomerRequest;
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.GetCustomerRequest;
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.UpdateCustomerRequest;
+import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse;
+import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNameResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +61,15 @@ public class CustomerManager implements CustomerService {
         return customerRepository.findAll().stream()
                 .map(Customer::getName)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GetCustomerNameResponse> getBySurnameOrName(String name) {
+        return customerRepository.findBySurnameOrName(name);
+    }
+
+    @Override
+    public List<GetCustomerNIDResponse> getByNIDEndsWith(int id) {
+        return customerRepository.getByNIDEndsWith(id);
     }
 }

@@ -7,6 +7,8 @@ import com.java_spring.java_spring_crud.services.dtos.car.requests.AddCarRequest
 import com.java_spring.java_spring_crud.services.dtos.car.requests.DeleteCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.GetCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequest;
+import com.java_spring.java_spring_crud.services.dtos.car.responses.GetModelNameResponse;
+import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,36 +47,13 @@ public class CarsController
         carService.update(request);
     }
 
-    /*
-    @GetMapping
-    public List<Car> getAll() {
-        List<Car> cars = carRepository.findAll();
-        return cars;
+    @GetMapping("contains")
+    public List<GetModelNameResponse> findByModelNameContaining(@RequestParam String modelName) {
+        return carService.findByModelNameContaining(modelName);
     }
 
-    @GetMapping("{id}")
-    public Car getById(@PathVariable int id) {
-        return carRepository.findById(id).orElseThrow();
+    @GetMapping("status")
+    public List<GetStatusResponse> getStatusResponses(@RequestParam String status) {
+        return carService.getStatus(status);
     }
-
-    @PostMapping
-    public void add(@RequestBody Car car){
-        carRepository.save(car);
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id) {
-        Car carToDelete = carRepository.findById(id).orElseThrow();
-        carRepository.delete(carToDelete);
-    }
-
-    @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Car car){
-        Car carToUpdate = carRepository.findById(id).orElseThrow();
-        carToUpdate.setColor(car.getColor());
-        carToUpdate.setStatus(car.getStatus());
-        carToUpdate.setDailyPrice(car.getDailyPrice());
-        carRepository.save(carToUpdate);
-    }
-     */
 }

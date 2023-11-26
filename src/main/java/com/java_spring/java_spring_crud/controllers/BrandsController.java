@@ -7,6 +7,7 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.AddBrandReq
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
+import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,35 +50,15 @@ public class BrandsController
         brandService.deleteById(request);
     }
 
-    /*
-    @GetMapping
-    public List<Brand> getAll() {
-        List<Brand> brands = brandRepository.findAll();
-        return brands;
+    @GetMapping("dto")
+    public List<GetListBrandResponse> getByNameDto(@RequestParam String name) {
+        return brandService.getByNameDto(name);
     }
 
-    @GetMapping("{id}")
-    public Brand getById(@PathVariable int id){
-       return brandRepository.findById(id).orElseThrow();
+    @GetMapping("name")
+    public List<Brand> getByName(@RequestParam String name) {
+        return brandService.getByName(name);
     }
 
-    @PostMapping
-    public void add(@RequestBody Brand brand){
-        brandRepository.save(brand);
-    }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id){
-        Brand brandToDelete = brandRepository.findById(id).orElseThrow();
-        brandRepository.delete(brandToDelete);
-    }
-
-    @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Brand brand){
-        Brand brandToUpdate = brandRepository.findById(id).orElseThrow();
-        brandToUpdate.setName(brand.getName());
-        brandRepository.save(brandToUpdate);
-
-    }
-    */
 }

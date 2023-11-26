@@ -5,13 +5,18 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.AddBrandReq
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
+import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
 
 import java.util.List;
 
 public interface BrandService {
-    public void add(AddBrandRequest request);
-    public void update(UpdateBrandRequest request);
-    public List<String> getAll();
-    public Brand getById(GetBrandRequest request);
-    public void deleteById(DeleteBrandRequest request);
+    void add(AddBrandRequest request);
+    void update(UpdateBrandRequest request);
+    List<String> getAll();
+    Brand getById(GetBrandRequest request);
+    void deleteById(DeleteBrandRequest request);
+
+    List<GetListBrandResponse> getByNameDto(String name);
+
+    List<Brand> getByName(String name);
 }

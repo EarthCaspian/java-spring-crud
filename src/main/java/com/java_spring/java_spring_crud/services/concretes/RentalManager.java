@@ -14,6 +14,7 @@ import com.java_spring.java_spring_crud.services.dtos.rental.requests.DeleteRent
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.GetRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.UpdateRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRentalResponse;
+import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetRentalByDateResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -68,11 +69,14 @@ public class RentalManager implements RentalService {
 
         Rental rentalToUpdate = rentalRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Kiralama bulunamadı."));
-        rentalToUpdate.setCustomer(request.getCustomer_id());
-        rentalToUpdate.setCar(request.getCar_id());
+        Customer customer = customerRepository.findById(request.getCustomer_id()).get();
+        rentalToUpdate.setCustomer(customer);
+        Car car = carRepository.findById(request.getCar_id()).get();
+        rentalToUpdate.setCar(car);
         rentalToUpdate.setStart_date(request.getStart_date());
         rentalToUpdate.setEnd_date(request.getEnd_date());
-        rentalToUpdate.setLocation(request.getLocation_id());
+        Location location = locationRepository.findById(request.getLocation_id()).get();
+        rentalToUpdate.setLocation(location);
         rentalRepository.save(rentalToUpdate);
     }
 
@@ -95,4 +99,11 @@ public class RentalManager implements RentalService {
         });
         return rentalResponses;
     }
+
+    @Override
+    public List<GetRentalByDateResponse> getByDate(LocalDate date) {
+        return rentalRepository.getByDate(date);
+    }
+
+
 }

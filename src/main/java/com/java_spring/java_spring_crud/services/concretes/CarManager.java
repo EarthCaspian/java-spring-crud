@@ -7,6 +7,8 @@ import com.java_spring.java_spring_crud.services.dtos.car.requests.AddCarRequest
 import com.java_spring.java_spring_crud.services.dtos.car.requests.DeleteCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.GetCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequest;
+import com.java_spring.java_spring_crud.services.dtos.car.responses.GetModelNameResponse;
+import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +67,15 @@ public class CarManager implements CarService {
         Car carToDelete = carRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Model bulunamadı."));
         carRepository.delete(carToDelete);
+    }
+
+    @Override
+    public List<GetModelNameResponse> findByModelNameContaining(String modelName) {
+        return carRepository.findByModelNameContaining(modelName);
+    }
+
+    @Override
+    public List<GetStatusResponse> getStatus(String status) {
+        return carRepository.getStatus(status);
     }
 }

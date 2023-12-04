@@ -74,7 +74,10 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public List<GetEmployeePhoneResponse> getByPhone(String phone) {
-        return employeeRepository.getByPhone(phone);
+
+        return employeeRepository.getByPhone(phone).stream().map((employee) -> new GetEmployeePhoneResponse(
+                employee.getPhone(), employee.getName(),employee.getSurname(), employee.getId()
+        )).toList();
     }
 
     @Override

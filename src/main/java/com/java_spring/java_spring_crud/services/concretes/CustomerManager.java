@@ -65,7 +65,9 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public List<GetCustomerNameResponse> getBySurnameOrName(String name) {
-        return customerRepository.findBySurnameOrName(name);
+        return customerRepository.findBySurnameOrName(name).stream().map((customer) -> new GetCustomerNameResponse(
+                customer.getSurname(), customer.getName(),customer.getEmail()
+        )).toList();
     }
 
     @Override

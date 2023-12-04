@@ -11,7 +11,7 @@ import java.util.List;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query("Select new com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNameResponse" +
-            "(c.surname,c.name) from Customer c where c.surname= :name or c.name= :name")
+            "(c.surname,c.name,c.email) from Customer c where c.surname= :name or c.name= :name")
     List<GetCustomerNameResponse> findBySurnameOrName(String name);
 
     @Query("Select new com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse" +

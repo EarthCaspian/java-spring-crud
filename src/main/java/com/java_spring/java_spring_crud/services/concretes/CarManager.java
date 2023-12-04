@@ -71,7 +71,9 @@ public class CarManager implements CarService {
 
     @Override
     public List<GetModelNameResponse> findByModelNameContaining(String modelName) {
-        return carRepository.findByModelNameContaining(modelName);
+       // return carRepository.findByModelNameContaining(modelName);
+        return carRepository.findAll().stream().filter(car -> car.getModelName().contains(modelName)).map(
+                car -> new GetModelNameResponse(car.getModelName())).toList();
     }
 
     @Override

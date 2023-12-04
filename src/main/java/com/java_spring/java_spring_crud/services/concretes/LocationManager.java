@@ -72,7 +72,10 @@ public class LocationManager implements LocationService {
 
     @Override
     public List<GetLocationByManagerResponse> getByManager(int id) {
-        return locationRepository.getByManager(id);
+
+        return locationRepository.getByManager(id).stream()
+                .map((location) -> new GetLocationByManagerResponse(location.getManager_id(), location.getName(),
+                        location.getAddress())).toList();
     }
 
     @Override

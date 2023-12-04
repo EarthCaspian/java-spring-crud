@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class GetCustomerNameResponse {
     private String surname;
     private String name;
+    private String email;
 }

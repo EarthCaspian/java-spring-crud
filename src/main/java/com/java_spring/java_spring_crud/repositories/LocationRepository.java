@@ -12,7 +12,7 @@ import java.util.List;
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
     @Query("Select new com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse" +
-            "(e.id,l.address,l.name) from Location l join l.manager_id e where e.id= :id")
+            "(e.id,l.address,l.name) from Location l join l.managerId e where e.id= :id")
     List<GetLocationByManagerResponse> getByManager(int id);
 
     @Query("Select new com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByAddressLength" +

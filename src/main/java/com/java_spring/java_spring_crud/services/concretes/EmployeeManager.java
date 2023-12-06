@@ -4,6 +4,7 @@ import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.entities.Employee;
 import com.java_spring.java_spring_crud.repositories.CustomerRepository;
 import com.java_spring.java_spring_crud.repositories.EmployeeRepository;
+import com.java_spring.java_spring_crud.services.abstracts.CustomerService;
 import com.java_spring.java_spring_crud.services.abstracts.EmployeeService;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.AddEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.DeleteEmployeeRequest;
@@ -20,11 +21,11 @@ import java.util.stream.Collectors;
 public class EmployeeManager implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    public EmployeeManager(EmployeeRepository employeeRepository, CustomerRepository customerRepository) {
+    public EmployeeManager(EmployeeRepository employeeRepository, CustomerService customerService) {
         this.employeeRepository = employeeRepository;
-        this.customerRepository = customerRepository;
+        this.customerService = customerService;
     }
 
     @Override
@@ -36,8 +37,7 @@ public class EmployeeManager implements EmployeeService {
         employee.setName(request.getName());
         employee.setSurname(request.getSurname());
         employee.setPhone(request.getPhone());
-        Customer customer = customerRepository.findById(request.getCustomer_relation())
-                .orElseThrow(() -> new RuntimeException("Bulunamadı"));
+        Customer customer = customerService.getById(request.getCustomer_relation());
         employee.setCustomer_relation(customer);
         employeeRepository.save(employee);
     }
@@ -54,7 +54,7 @@ public class EmployeeManager implements EmployeeService {
         Employee employeeToUpdate = employeeRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
         employeeToUpdate.setPhone(request.getPhone());
-        Customer customer = customerRepository.findById(request.getId()).get();
+        Customer customer = customerService.getById(request.getCustomer_relation());
         employeeToUpdate.setCustomer_relation(customer);
         employeeRepository.save(employeeToUpdate);
     }
@@ -83,5 +83,10 @@ public class EmployeeManager implements EmployeeService {
     @Override
     public List<GetEmployeeByRelationResponse> getByRelation(int id) {
         return employeeRepository.getByRelation(id);
+    }
+
+    @Override
+    public Employee getById(int id) {
+        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
     }
 }

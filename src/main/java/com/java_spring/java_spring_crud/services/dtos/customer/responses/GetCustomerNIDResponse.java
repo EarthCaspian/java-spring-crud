@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetCustomerNIDResponse {
-    private int national_id;
+    private int nationalId;
     private String name;
     private String surname;
 }

@@ -15,6 +15,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<GetCustomerNameResponse> findBySurnameOrName(String name);
 
     @Query("Select new com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse" +
-            "(c.national_id,c.name,c.surname) from Customer c where cast(c.national_id as string) like %?1")
+            "(c.nationalId,c.name,c.surname) from Customer c where cast(c.nationalId as string) like %?1")
     List<GetCustomerNIDResponse> getByNIDEndsWith(int id);
+
+    boolean existsByNationalId(int id);
 }

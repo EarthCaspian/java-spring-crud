@@ -8,6 +8,7 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrand
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class BrandsController
 
 
     @PostMapping
-    public void add(@RequestBody AddBrandRequest request){
+    public void add(@RequestBody @Valid AddBrandRequest request){
         brandService.add(request);
     }
 
@@ -36,7 +37,7 @@ public class BrandsController
     }
 
     @PutMapping("{id}")
-    public void update(UpdateBrandRequest request) {
+    public void update(@RequestBody @Valid UpdateBrandRequest request) {
         brandService.update(request);
     }
 

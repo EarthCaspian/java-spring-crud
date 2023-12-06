@@ -18,4 +18,6 @@ public interface CustomerService {
     List<String> getAll();
     List<GetCustomerNameResponse> getBySurnameOrName(String name);
     List<GetCustomerNIDResponse> getByNIDEndsWith(int id);
+
+    Customer getById(int id);
 }

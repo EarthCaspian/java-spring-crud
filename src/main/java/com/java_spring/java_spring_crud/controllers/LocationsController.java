@@ -8,6 +8,7 @@ import com.java_spring.java_spring_crud.services.dtos.location.requests.GetLocat
 import com.java_spring.java_spring_crud.services.dtos.location.requests.UpdateLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByAddressLength;
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class LocationsController
     }
 
     @PostMapping
-    public void add(@RequestBody AddLocationRequest request) {
+    public void add(@RequestBody @Valid AddLocationRequest request) {
         locationService.add(request);
     }
 
@@ -43,7 +44,7 @@ public class LocationsController
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody UpdateLocationRequest request) {
+    public void update(@Valid @RequestBody UpdateLocationRequest request) {
         locationService.update(request);
     }
 

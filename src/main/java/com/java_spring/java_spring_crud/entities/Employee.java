@@ -32,7 +32,7 @@ public class Employee
     @JoinColumn(name="customer_relation")
     private Customer customer_relation;
 
-    @OneToMany(mappedBy = "manager_id")
+    @OneToMany(mappedBy = "managerId")
     @JsonIgnore
     private List<Location> locations;
 }

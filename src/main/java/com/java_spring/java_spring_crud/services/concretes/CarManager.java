@@ -1,8 +1,11 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.entities.Brand;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.repositories.CarRepository;
+import com.java_spring.java_spring_crud.services.abstracts.BrandService;
 import com.java_spring.java_spring_crud.services.abstracts.CarService;
+import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.AddCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.DeleteCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.GetCarRequest;
@@ -18,23 +21,31 @@ import java.util.stream.Collectors;
 public class CarManager implements CarService {
 
     private final CarRepository carRepository;
+    private final BrandService brandService;
 
-    public CarManager(CarRepository carRepository) {
+    public CarManager(CarRepository carRepository, BrandService brandService) {
         this.carRepository = carRepository;
+        this.brandService = brandService;
     }
 
     @Override
     public void add(AddCarRequest request) {
 
-        if (request.getModelName() == null)
-            throw new RuntimeException("İsim boş bırakılamaz.");
+        if (carRepository.existsCarByPlate(request.getPlate())){
+            throw new RuntimeException("Aynı plaka ile 2. araç eklenemez.");
+        }
+
 
         Car car = new Car();
         car.setModelYear(request.getModelYear());
         car.setModelName(request.getModelName());
         car.setDailyPrice(request.getDailyPrice());
         car.setColor(request.getColor());
-        car.setStatus(request.getStatus());
+        car.setStatus("Available");
+        car.setPlate(request.getPlate());
+
+        Brand brand = brandService.getById(request.getBrandId());
+        car.setBrand(brand);
         carRepository.save(car);
 
     }
@@ -46,6 +57,7 @@ public class CarManager implements CarService {
         carToUpdate.setDailyPrice(request.getDailyPrice());
         carToUpdate.setColor(request.getColor());
         carToUpdate.setStatus(request.getStatus());
+        carToUpdate.setPlate(request.getPlate());
         carRepository.save(carToUpdate);
     }
 
@@ -79,5 +91,10 @@ public class CarManager implements CarService {
     @Override
     public List<GetStatusResponse> getStatus(String status) {
         return carRepository.getStatus(status);
+    }
+
+    @Override
+    public Car getById(int id) {
+        return carRepository.findById(id).orElseThrow(() -> new RuntimeException("Araç bulunamadı."));
     }
 }

@@ -20,4 +20,6 @@ public interface EmployeeService {
 
     List<GetEmployeeByRelationResponse> getByRelation(int id);
 
+    Employee getById(int id);
+
 }

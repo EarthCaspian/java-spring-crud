@@ -25,8 +25,13 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public void add(AddCustomerRequest request) {
+
+        if (customerRepository.existsByNationalId(request.getNationalId())){
+            throw new RuntimeException("Bu kimlik numarası sistemde kayıtlı.");
+        }
+
         Customer customer = new Customer();
-        customer.setNational_id(request.getNational_id());
+        customer.setNationalId(request.getNationalId());
         customer.setName(request.getName());
         customer.setSurname(request.getSurname());
         customer.setPhone(request.getPhone());
@@ -73,5 +78,10 @@ public class CustomerManager implements CustomerService {
     @Override
     public List<GetCustomerNIDResponse> getByNIDEndsWith(int id) {
         return customerRepository.getByNIDEndsWith(id);
+    }
+
+    @Override
+    public Customer getById(int id) {
+        return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Müşteri bulunamadı."));
     }
 }

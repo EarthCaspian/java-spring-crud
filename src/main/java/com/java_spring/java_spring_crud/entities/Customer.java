@@ -20,7 +20,7 @@ public class Customer
     private int id;
 
     @Column(name = "national_id")
-    private int national_id;
+    private int nationalId;
 
     @Column(name = "name")
     private String name;

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetLocationByManagerResponse {
-    private int manager_id;
+    private int managerId;
     private String address;
     private String name;
 }

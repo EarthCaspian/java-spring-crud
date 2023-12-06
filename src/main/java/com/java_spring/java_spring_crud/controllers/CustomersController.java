@@ -9,6 +9,7 @@ import com.java_spring.java_spring_crud.services.dtos.customer.requests.GetCusto
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.UpdateCustomerRequest;
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse;
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNameResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class CustomersController
     }
 
     @PostMapping
-    public void add(@RequestBody AddCustomerRequest request) {
+    public void add(@RequestBody @Valid AddCustomerRequest request) {
         customerService.add(request);
     }
 
@@ -44,7 +45,7 @@ public class CustomersController
     }
 
     @PutMapping("{id}")
-    public void updateById(UpdateCustomerRequest request) {
+    public void updateById(@Valid @RequestBody UpdateCustomerRequest request) {
         customerService.update(request);
     }
 

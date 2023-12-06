@@ -21,4 +21,6 @@ public interface CarService {
 
     List<GetModelNameResponse> findByModelNameContaining(String modelName);
     List<GetStatusResponse> getStatus(String status);
+
+    Car getById(int id);
 }

@@ -10,6 +10,7 @@ import com.java_spring.java_spring_crud.services.dtos.rental.requests.GetRentalR
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.UpdateRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRentalResponse;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetRentalByDateResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -36,7 +37,7 @@ public class RentalsController
     }
 
     @PostMapping
-    public void add(@RequestBody AddRentalRequest request) {
+    public void add(@RequestBody @Valid AddRentalRequest request) {
         rentalService.add(request);
     }
 
@@ -46,7 +47,7 @@ public class RentalsController
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody UpdateRentalRequest request) {
+    public void update(@Valid @RequestBody UpdateRentalRequest request) {
         rentalService.update(request);
     }
 

@@ -19,4 +19,6 @@ public interface LocationService {
     List<GetLocationByManagerResponse> getByManager(int id);
     List<GetLocationByAddressLength> getByAddressLength(int length);
 
+    Location getById(int id);
+
 }

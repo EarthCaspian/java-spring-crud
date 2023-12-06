@@ -4,6 +4,7 @@ import com.java_spring.java_spring_crud.entities.Employee;
 import com.java_spring.java_spring_crud.entities.Location;
 import com.java_spring.java_spring_crud.repositories.EmployeeRepository;
 import com.java_spring.java_spring_crud.repositories.LocationRepository;
+import com.java_spring.java_spring_crud.services.abstracts.EmployeeService;
 import com.java_spring.java_spring_crud.services.abstracts.LocationService;
 import com.java_spring.java_spring_crud.services.dtos.location.requests.AddLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.requests.DeleteLocationRequest;
@@ -20,11 +21,11 @@ import java.util.stream.Collectors;
 public class LocationManager implements LocationService {
 
     private final LocationRepository locationRepository;
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public LocationManager(LocationRepository locationRepository, EmployeeRepository employeeRepository) {
+    public LocationManager(LocationRepository locationRepository, EmployeeService employeeService) {
         this.locationRepository = locationRepository;
-        this.employeeRepository = employeeRepository;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -35,8 +36,8 @@ public class LocationManager implements LocationService {
         Location location = new Location();
         location.setAddress(request.getAddress());
         location.setName(request.getName());
-        Employee employee = employeeRepository.findById(request.getManager_id()).get();
-        location.setManager_id(employee);
+        Employee employee = employeeService.getById(request.getManagerId());
+        location.setManagerId(employee);
         locationRepository.save(location);
     }
 
@@ -53,7 +54,8 @@ public class LocationManager implements LocationService {
                 .orElseThrow(() -> new RuntimeException("Şube bulunamadı."));
         locationToUpdate.setAddress(request.getAddress());
         locationToUpdate.setName(request.getName());
-        locationToUpdate.setManager_id(request.getManager_id());
+        Employee employee = employeeService.getById(request.getManagerId());
+        locationToUpdate.setManagerId(employee);
         locationRepository.save(locationToUpdate);
     }
 
@@ -74,12 +76,17 @@ public class LocationManager implements LocationService {
     public List<GetLocationByManagerResponse> getByManager(int id) {
 
         return locationRepository.getByManager(id).stream()
-                .map((location) -> new GetLocationByManagerResponse(location.getManager_id(), location.getName(),
+                .map((location) -> new GetLocationByManagerResponse(location.getManagerId(), location.getName(),
                         location.getAddress())).toList();
     }
 
     @Override
     public List<GetLocationByAddressLength> getByAddressLength(int length) {
         return locationRepository.getByAddressLength(length);
+    }
+
+    @Override
+    public Location getById(int id) {
+        return locationRepository.findById(id).orElseThrow(() -> new RuntimeException("Lokasyon bulunamadı."));
     }
 }

@@ -74,5 +74,10 @@ public class BrandManager implements BrandService {
         return brandRepository.findByNameStartsWith(name);
     }
 
+    @Override
+    public Brand getById(int id) {
+        return brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Marka bulunamadı."));
+    }
+
 
 }

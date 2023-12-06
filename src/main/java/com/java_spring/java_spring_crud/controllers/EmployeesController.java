@@ -8,6 +8,7 @@ import com.java_spring.java_spring_crud.services.dtos.employee.requests.GetEmplo
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.UpdateEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeeByRelationResponse;
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeePhoneResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class EmployeesController
     }
 
     @PostMapping
-    public void add(@RequestBody AddEmployeeRequest request) {
+    public void add(@RequestBody @Valid AddEmployeeRequest request) {
         employeeService.add(request);
     }
 
@@ -43,7 +44,7 @@ public class EmployeesController
     }
 
     @PutMapping("{id}")
-    public void update(UpdateEmployeeRequest request) {
+    public void update(@Valid @RequestBody UpdateEmployeeRequest request) {
         employeeService.update(request);
     }
 

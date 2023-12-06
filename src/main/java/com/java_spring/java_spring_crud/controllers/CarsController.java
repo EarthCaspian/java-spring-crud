@@ -9,6 +9,7 @@ import com.java_spring.java_spring_crud.services.dtos.car.requests.GetCarRequest
 import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetModelNameResponse;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CarsController
     }
 
     @PostMapping
-    public void add(@RequestBody AddCarRequest request) {
+    public void add(@RequestBody @Valid AddCarRequest request) {
         carService.add(request);
     }
 
@@ -43,7 +44,7 @@ public class CarsController
     }
 
     @PutMapping("{id}")
-    public void updateById(UpdateCarRequest request) {
+    public void updateById(@Valid @RequestBody UpdateCarRequest request) {
         carService.update(request);
     }
 

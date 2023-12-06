@@ -8,6 +8,9 @@ import com.java_spring.java_spring_crud.repositories.CarRepository;
 import com.java_spring.java_spring_crud.repositories.CustomerRepository;
 import com.java_spring.java_spring_crud.repositories.LocationRepository;
 import com.java_spring.java_spring_crud.repositories.RentalRepository;
+import com.java_spring.java_spring_crud.services.abstracts.CarService;
+import com.java_spring.java_spring_crud.services.abstracts.CustomerService;
+import com.java_spring.java_spring_crud.services.abstracts.LocationService;
 import com.java_spring.java_spring_crud.services.abstracts.RentalService;
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.AddRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.DeleteRentalRequest;
@@ -26,16 +29,15 @@ import java.util.List;
 public class RentalManager implements RentalService {
 
     private final RentalRepository rentalRepository;
-    private final CustomerRepository customerRepository;
-    private final CarRepository carRepository;
-    private final LocationRepository locationRepository;
+    private final CustomerService customerService;
+    private final CarService carService;
+    private final LocationService locationService;
 
-    public RentalManager(RentalRepository rentalRepository, CustomerRepository customerRepository,
-                         CarRepository carRepository, LocationRepository locationRepository) {
+    public RentalManager(RentalRepository rentalRepository, CustomerService customerService, CarService carService, LocationService locationService) {
         this.rentalRepository = rentalRepository;
-        this.customerRepository = customerRepository;
-        this.carRepository = carRepository;
-        this.locationRepository = locationRepository;
+        this.customerService = customerService;
+        this.carService = carService;
+        this.locationService = locationService;
     }
 
     @Override
@@ -44,11 +46,11 @@ public class RentalManager implements RentalService {
             throw new RuntimeException("Yeni kiralama tarih aralıkları geçmişte olamaz.");
 
         Rental rental = new Rental();
-        Customer customer = customerRepository.findById(request.getCustomer_id()).get();
+        Customer customer = customerService.getById(request.getCustomer_id());
         rental.setCustomer(customer);
-        Car car = carRepository.findById(request.getCar_id()).get();
+        Car car = carService.getById(request.getCar_id());
         rental.setCar(car);
-        Location location = locationRepository.findById(request.getLocation_id()).get();
+        Location location = locationService.getById(request.getLocation_id());
         rental.setLocation(location);
         rental.setStart_date(request.getStart_date());
         rental.setEnd_date(request.getEnd_date());
@@ -69,13 +71,13 @@ public class RentalManager implements RentalService {
 
         Rental rentalToUpdate = rentalRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Kiralama bulunamadı."));
-        Customer customer = customerRepository.findById(request.getCustomer_id()).get();
+        Customer customer = customerService.getById(request.getCustomer_id());
         rentalToUpdate.setCustomer(customer);
-        Car car = carRepository.findById(request.getCar_id()).get();
+        Car car = carService.getById(request.getCar_id());
         rentalToUpdate.setCar(car);
         rentalToUpdate.setStart_date(request.getStart_date());
         rentalToUpdate.setEnd_date(request.getEnd_date());
-        Location location = locationRepository.findById(request.getLocation_id()).get();
+        Location location = locationService.getById(request.getLocation_id());
         rentalToUpdate.setLocation(location);
         rentalRepository.save(rentalToUpdate);
     }

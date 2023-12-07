@@ -16,14 +16,14 @@ public class UpdateCarRequest {
     @Positive
     private int id;
 
-    @NotBlank
+    @NotBlank(message = "Boş bırakılamaz.")
     private String status;
 
-    @NotBlank
+    @NotBlank(message = "Boş bırakılamaz.")
     private String color;
 
-    @NotBlank
-    @Length(min = 6)
+    @NotBlank(message = "Boş bırakılamaz.")
+    @Length(min = 6, message = "Plaka en az 6 haneden oluşmalıdır.")
     private String plate;
 
     @Positive

@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.services.dtos.customer.requests;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -12,6 +13,7 @@ public class UpdateCustomerRequest {
 
     @NotBlank
     @Length(max = 7, message = "Boş bırakılamaz, en fazla 7 karakter.")
+    @Pattern(regexp = "^[0-9]*$", message = "Sadece rakam giriniz.")
     private String phone;
 
     @NotBlank

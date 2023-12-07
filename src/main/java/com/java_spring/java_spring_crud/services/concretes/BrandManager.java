@@ -28,6 +28,13 @@ public class BrandManager implements BrandService {
         if (request.getName().length() < 3)
             throw new RuntimeException("Marka adı 3 karakterden az olamaz.");
 
+        if (!Character.isUpperCase(request.getName().charAt(0)))
+            throw new RuntimeException("Marka adı büyük harfle başlamalıdır.");
+
+        if (brandRepository.existsByName(request.getName()))
+            throw new RuntimeException("Bu isimde bir marka mevcut");
+
+
         Brand brand = new Brand();
         brand.setName(request.getName());
         brandRepository.save(brand);
@@ -37,6 +44,13 @@ public class BrandManager implements BrandService {
     public void update(UpdateBrandRequest request) {
         Brand brandToUpdate = brandRepository.findById(request.getId())
                                              .orElseThrow( () -> new RuntimeException("Marka bulunamadı."));
+        if (request.getName().length() < 3)
+            throw new RuntimeException("Marka adı 3 karakterden az olamaz.");
+
+        if (brandRepository.existsByName(request.getName())) {
+            throw new RuntimeException("Bu isimde bir marka mevcut, lütfen başka bir marka adı giriniz.");
+        }
+
         brandToUpdate.setName(request.getName());
         brandRepository.save(brandToUpdate);
     }

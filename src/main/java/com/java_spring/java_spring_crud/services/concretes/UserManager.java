@@ -4,6 +4,7 @@ import com.java_spring.java_spring_crud.entities.User;
 import com.java_spring.java_spring_crud.repositories.UserRepository;
 import com.java_spring.java_spring_crud.services.abstracts.UserService;
 import com.java_spring.java_spring_crud.services.dtos.user.CreateUserRequest;
+import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +28,11 @@ public class UserManager implements UserService {
                     .password(passwordEncoder.encode(createUserRequest.getPassword()))
                     .build();
             userRepository.save(user);
+    }
+
+    @Override
+    public String login(LoginRequest loginRequest) {
+        return "";
     }
 
     @Override

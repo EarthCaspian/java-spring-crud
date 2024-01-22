@@ -12,21 +12,18 @@ import com.java_spring.java_spring_crud.services.dtos.employee.requests.GetEmplo
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.UpdateEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeeByRelationResponse;
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeePhoneResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class EmployeeManager implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final CustomerService customerService;
-
-    public EmployeeManager(EmployeeRepository employeeRepository, CustomerService customerService) {
-        this.employeeRepository = employeeRepository;
-        this.customerService = customerService;
-    }
 
     @Override
     public void add(AddEmployeeRequest request) {

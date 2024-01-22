@@ -18,6 +18,7 @@ import com.java_spring.java_spring_crud.services.dtos.rental.requests.GetRentalR
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.UpdateRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRentalResponse;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetRentalByDateResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ import java.util.List;
 
 
 @Service
+@AllArgsConstructor
 public class RentalManager implements RentalService {
 
     private final RentalRepository rentalRepository;
@@ -33,12 +35,6 @@ public class RentalManager implements RentalService {
     private final CarService carService;
     private final LocationService locationService;
 
-    public RentalManager(RentalRepository rentalRepository, CustomerService customerService, CarService carService, LocationService locationService) {
-        this.rentalRepository = rentalRepository;
-        this.customerService = customerService;
-        this.carService = carService;
-        this.locationService = locationService;
-    }
 
     @Override
     public void add(AddRentalRequest request) {

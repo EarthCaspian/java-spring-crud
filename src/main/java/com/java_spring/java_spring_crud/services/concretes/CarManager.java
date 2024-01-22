@@ -12,21 +12,19 @@ import com.java_spring.java_spring_crud.services.dtos.car.requests.GetCarRequest
 import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetModelNameResponse;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class CarManager implements CarService {
 
     private final CarRepository carRepository;
     private final BrandService brandService;
 
-    public CarManager(CarRepository carRepository, BrandService brandService) {
-        this.carRepository = carRepository;
-        this.brandService = brandService;
-    }
 
     @Override
     public void add(AddCarRequest request) {

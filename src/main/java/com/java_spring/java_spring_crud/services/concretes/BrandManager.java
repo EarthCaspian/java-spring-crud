@@ -8,12 +8,14 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrand
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class BrandManager implements BrandService {
 
     private final BrandRepository brandRepository;

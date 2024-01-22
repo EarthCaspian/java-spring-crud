@@ -9,19 +9,18 @@ import com.java_spring.java_spring_crud.services.dtos.customer.requests.GetCusto
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.UpdateCustomerRequest;
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse;
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNameResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class CustomerManager implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerManager(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
     @Override
     public void add(AddCustomerRequest request) {

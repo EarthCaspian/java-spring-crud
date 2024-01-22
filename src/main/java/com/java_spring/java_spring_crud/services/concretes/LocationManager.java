@@ -12,21 +12,18 @@ import com.java_spring.java_spring_crud.services.dtos.location.requests.GetLocat
 import com.java_spring.java_spring_crud.services.dtos.location.requests.UpdateLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByAddressLength;
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class LocationManager implements LocationService {
 
     private final LocationRepository locationRepository;
     private final EmployeeService employeeService;
-
-    public LocationManager(LocationRepository locationRepository, EmployeeService employeeService) {
-        this.locationRepository = locationRepository;
-        this.employeeService = employeeService;
-    }
 
     @Override
     public void add(AddLocationRequest request) {

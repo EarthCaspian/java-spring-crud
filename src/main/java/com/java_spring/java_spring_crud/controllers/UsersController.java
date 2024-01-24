@@ -2,6 +2,7 @@ package com.java_spring.java_spring_crud.controllers;
 
 
 import com.java_spring.java_spring_crud.core.services.JwtService;
+import com.java_spring.java_spring_crud.services.abstracts.AuthService;
 import com.java_spring.java_spring_crud.services.abstracts.UserService;
 import com.java_spring.java_spring_crud.services.dtos.user.CreateUserRequest;
 import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
@@ -18,8 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class UsersController {
 
     private final UserService userService;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+//    private final JwtService jwtService;
+//    private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
 
 
     @PostMapping("register")
@@ -31,12 +33,14 @@ public class UsersController {
     @PostMapping("login")
     @ResponseStatus(HttpStatus.OK)
     public String login(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        return authService.login(loginRequest);
 
-        if (authentication.isAuthenticated()){
-            return jwtService.generateToken(loginRequest.getUsername());
-        }
-
-        throw new RuntimeException("Password or username is incorrect.");
+//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+//
+//        if (authentication.isAuthenticated()){
+//            return jwtService.generateToken(loginRequest.getUsername());
+//        }
+//
+//        throw new RuntimeException("Password or username is incorrect.");
     }
 }

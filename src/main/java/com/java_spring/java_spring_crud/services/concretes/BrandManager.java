@@ -20,9 +20,6 @@ public class BrandManager implements BrandService {
 
     private final BrandRepository brandRepository;
 
-    public BrandManager(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
 
     @Override
     public void add(AddBrandRequest request) {

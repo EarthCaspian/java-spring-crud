@@ -43,7 +43,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(x -> x
                         .requestMatchers(WHITE_LIST_URLS).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/brands/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/brands/**").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/api/roles/**").permitAll()
+                        //.requestMatchers(HttpMethod.POST,"/api/brands/**").hasAnyAuthority(Role.ADMIN.name())
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

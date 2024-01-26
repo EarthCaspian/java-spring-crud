@@ -5,7 +5,7 @@ import com.java_spring.java_spring_crud.services.dtos.RoleDto;
 
 public interface RoleService {
 
-    RoleDto createRole(String name);
+    RoleDto createRole(RoleDto roleDto);
     void deleteRole(Integer id);
 
     RoleEntity findByName(String name);

@@ -17,10 +17,9 @@ public class RoleManager implements RoleService {
 
 
     @Override
-    public RoleDto createRole(String name) {
-        RoleEntity role = new RoleEntity();
-        role.setName(name);
-        RoleEntity savedRole = roleRepository.save(role);
+    public RoleDto createRole(RoleDto roleDto) {
+        RoleEntity roleEntity = modelMapperService.forRequest().map(roleDto, RoleEntity.class);
+        RoleEntity savedRole = roleRepository.save(roleEntity);
         return modelMapperService.forResponse().map(savedRole, RoleDto.class);
     }
 

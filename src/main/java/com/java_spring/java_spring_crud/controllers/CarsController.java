@@ -10,6 +10,7 @@ import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequ
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetModelNameResponse;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusResponse;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class CarsController
     public CarsController(CarService carService) { this.carService = carService;}
 
 
+    @PreAuthorize("hasRole('mod')")
     @GetMapping
     public List<String> getAll() {
        return carService.getAll();

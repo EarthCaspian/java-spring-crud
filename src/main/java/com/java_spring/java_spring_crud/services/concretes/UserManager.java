@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.entities.RoleEntity;
 import com.java_spring.java_spring_crud.entities.User;
 import com.java_spring.java_spring_crud.repositories.UserRepository;
@@ -7,6 +8,7 @@ import com.java_spring.java_spring_crud.services.abstracts.RoleService;
 import com.java_spring.java_spring_crud.services.abstracts.UserService;
 import com.java_spring.java_spring_crud.services.dtos.user.CreateUserRequest;
 import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
+import com.java_spring.java_spring_crud.services.dtos.user.responses.GetAllUsersResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,6 +29,7 @@ public class UserManager implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleService roleService;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void register(CreateUserRequest createUserRequest) {
@@ -46,6 +50,14 @@ public class UserManager implements UserService {
     @Override
     public String login(LoginRequest loginRequest) {
         return "";
+    }
+
+    @Override
+    public List<GetAllUsersResponse> getAll() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> this.modelMapperService.forResponse().map(user, GetAllUsersResponse.class))
+                .toList();
     }
 
     @Override

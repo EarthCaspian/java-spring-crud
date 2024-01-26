@@ -6,6 +6,7 @@ import com.java_spring.java_spring_crud.services.abstracts.AuthService;
 import com.java_spring.java_spring_crud.services.abstracts.UserService;
 import com.java_spring.java_spring_crud.services.dtos.user.CreateUserRequest;
 import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
+import com.java_spring.java_spring_crud.services.dtos.user.responses.GetAllUsersResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,14 +14,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
 public class UsersController {
 
     private final UserService userService;
-//    private final JwtService jwtService;
-//    private final AuthenticationManager authenticationManager;
     private final AuthService authService;
 
 
@@ -35,12 +36,10 @@ public class UsersController {
     public String login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
 
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-//
-//        if (authentication.isAuthenticated()){
-//            return jwtService.generateToken(loginRequest.getUsername());
-//        }
-//
-//        throw new RuntimeException("Password or username is incorrect.");
+    }
+
+    @GetMapping("getAll")
+    public List<GetAllUsersResponse> getAll() {
+        return userService.getAll();
     }
 }

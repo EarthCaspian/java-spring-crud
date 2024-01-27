@@ -9,6 +9,7 @@ import com.java_spring.java_spring_crud.services.dtos.location.requests.UpdateLo
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByAddressLength;
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +17,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/locations")
 @CrossOrigin
+@Data
 public class LocationsController
 {
     private final LocationService locationService;
 
-    public LocationsController(LocationService locationService) {
-        this.locationService = locationService;
-    }
 
     @GetMapping
     public List<String> getAll() {

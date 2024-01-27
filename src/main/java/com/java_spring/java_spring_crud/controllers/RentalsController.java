@@ -11,6 +11,7 @@ import com.java_spring.java_spring_crud.services.dtos.rental.requests.UpdateRent
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRentalResponse;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetRentalByDateResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,13 +20,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/rentals")
 @CrossOrigin
+@Data
 public class RentalsController
 {
     private final RentalService rentalService;
 
-    public RentalsController(RentalService rentalService) {
-        this.rentalService = rentalService;
-    }
 
     @GetMapping
     public List<GetAllRentalResponse> getAll(){

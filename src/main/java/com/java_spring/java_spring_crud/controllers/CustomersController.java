@@ -10,6 +10,7 @@ import com.java_spring.java_spring_crud.services.dtos.customer.requests.UpdateCu
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse;
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNameResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/customers")
 @CrossOrigin
+@Data
 public class CustomersController
 {
    private final CustomerService customerService;
 
-    public CustomersController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
 
     @GetMapping
     public List<String> getAll() {

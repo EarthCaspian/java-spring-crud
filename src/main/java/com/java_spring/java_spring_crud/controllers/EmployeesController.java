@@ -9,6 +9,7 @@ import com.java_spring.java_spring_crud.services.dtos.employee.requests.UpdateEm
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeeByRelationResponse;
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeePhoneResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +17,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/employees")
 @CrossOrigin
+@Data
 public class EmployeesController
 {
     private final EmployeeService employeeService;
 
-    public EmployeesController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @GetMapping
     public List<String> getAll() {

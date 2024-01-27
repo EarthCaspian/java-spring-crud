@@ -9,6 +9,7 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandReq
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +17,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/brands")
 @CrossOrigin
+@Data
 public class BrandsController
 {
 
     private final BrandService brandService;
-
-    public BrandsController(BrandService brandService) {
-        this.brandService = brandService;
-    }
-
 
 
     @PostMapping

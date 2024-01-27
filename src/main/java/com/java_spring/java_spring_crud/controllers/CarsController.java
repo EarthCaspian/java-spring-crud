@@ -10,6 +10,7 @@ import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequ
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetModelNameResponse;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("api/cars")
 @CrossOrigin
+@Data
 public class CarsController
 {
     private final CarService carService;
-
-    public CarsController(CarService carService) { this.carService = carService;}
 
 
     @PreAuthorize("hasRole('mod')")

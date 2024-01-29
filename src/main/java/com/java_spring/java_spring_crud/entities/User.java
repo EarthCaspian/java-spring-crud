@@ -28,10 +28,6 @@ public class User extends BaseEntity implements UserDetails {
 
     private String email;
 
-//    @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
-//    @Column(name = "role")
-//    @Enumerated(EnumType.STRING)
-//    private List<Role> authorities;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role_entities",

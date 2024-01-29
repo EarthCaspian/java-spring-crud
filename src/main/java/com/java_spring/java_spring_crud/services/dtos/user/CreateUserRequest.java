@@ -1,6 +1,5 @@
 package com.java_spring.java_spring_crud.services.dtos.user;
 
-import com.java_spring.java_spring_crud.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

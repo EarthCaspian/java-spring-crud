@@ -1,8 +1,6 @@
 package com.java_spring.java_spring_crud.core.configurations;
 
 import com.java_spring.java_spring_crud.core.filters.JwtAuthFilter;
-import com.java_spring.java_spring_crud.entities.Role;
-import com.java_spring.java_spring_crud.services.abstracts.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

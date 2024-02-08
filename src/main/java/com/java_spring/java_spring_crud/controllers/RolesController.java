@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.controllers;
 
 
+import com.java_spring.java_spring_crud.entities.RoleEntity;
 import com.java_spring.java_spring_crud.services.abstracts.RoleService;
 import com.java_spring.java_spring_crud.services.dtos.RoleDto;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/roles")
@@ -32,5 +34,10 @@ public class RolesController {
     @DeleteMapping("/delete")
     public void deleteRole(Integer id) {
         roleService.deleteRole(id);
+    }
+
+    @GetMapping("/getAll")
+    public List<RoleEntity> getAll() {
+        return roleService.getAll();
     }
 }

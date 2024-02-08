@@ -8,6 +8,10 @@ import com.java_spring.java_spring_crud.services.dtos.RoleDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -31,5 +35,15 @@ public class RoleManager implements RoleService {
     @Override
     public RoleEntity findByName(String name) {
         return roleRepository.findByName(name);
+    }
+
+    @Override
+    public List<RoleEntity> getAll() {
+        List<RoleEntity> roles = roleRepository.findAll();
+        return roles
+                .stream()
+                .map(role -> this.modelMapperService.forResponse()
+                        .map(role, RoleEntity.class))
+                        .toList();
     }
 }

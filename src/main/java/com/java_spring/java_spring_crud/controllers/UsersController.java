@@ -22,21 +22,7 @@ import java.util.List;
 public class UsersController {
 
     private final UserService userService;
-    private final AuthService authService;
 
-
-    @PostMapping("register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody CreateUserRequest request) {
-        userService.register(request);
-    }
-
-    @PostMapping("login")
-    @ResponseStatus(HttpStatus.OK)
-    public String login(@RequestBody LoginRequest loginRequest) {
-        return authService.login(loginRequest);
-
-    }
 
     @GetMapping("getAll")
     public List<GetAllUsersResponse> getAll() {

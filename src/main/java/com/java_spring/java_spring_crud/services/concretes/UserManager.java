@@ -26,30 +26,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserManager implements UserService {
 
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final RoleService roleService;
     private final ModelMapperService modelMapperService;
 
-    @Override
-    public void register(CreateUserRequest createUserRequest) {
-        Set<RoleEntity> authorities = createUserRequest.getRoles().stream()
-                .map(roleService::findByName)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-
-            User user = User.builder()
-                    .username(createUserRequest.getUsername())
-                    .email(createUserRequest.getEmail())
-                    .authorities(authorities)
-                    .password(passwordEncoder.encode(createUserRequest.getPassword()))
-                    .build();
-            userRepository.save(user);
-    }
 
     @Override
-    public String login(LoginRequest loginRequest) {
-        return "";
+    public void save(User user) {
+        userRepository.save(user);
     }
 
     @Override

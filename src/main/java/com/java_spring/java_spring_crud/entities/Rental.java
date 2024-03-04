@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.entities;
 
+import com.java_spring.java_spring_crud.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +11,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-public class Rental
+public class Rental extends BaseEntity
 {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
     @Column(name = "start_date")
     private LocalDate start_date;

@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.entities;
 
+import com.java_spring.java_spring_crud.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,12 +9,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Car
+public class Car extends BaseEntity
 {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
     @Column(name = "daily_price")
     private double dailyPrice;

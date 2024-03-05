@@ -31,7 +31,7 @@ public class AuthManager implements AuthService {
     private final UserService userService;
 
     @Override
-    public void register(CreateUserRequest createUserRequest) {
+    public String register(CreateUserRequest createUserRequest) {
         Set<RoleEntity> authorities = createUserRequest.getRoles().stream()
                 .map(roleService::findByName)
                 .filter(Objects::nonNull)
@@ -44,6 +44,7 @@ public class AuthManager implements AuthService {
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .build();
         userService.save(user);
+        return "User registered successfully";
     }
 
     @Override

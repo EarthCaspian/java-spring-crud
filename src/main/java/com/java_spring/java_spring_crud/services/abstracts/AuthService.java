@@ -5,6 +5,6 @@ import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
 
 public interface AuthService {
 
-    void register(CreateUserRequest createUserRequest);
+    String register(CreateUserRequest createUserRequest);
     String login (LoginRequest loginRequest);
 }

@@ -18,8 +18,8 @@ public class AuthController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody CreateUserRequest request) {
-        authService.register(request);
+    public String register(@RequestBody CreateUserRequest request) {
+        return authService.register(request);
     }
 
     @PostMapping("login")

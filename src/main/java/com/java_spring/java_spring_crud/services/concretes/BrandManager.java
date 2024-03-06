@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.entities.Brand;
 import com.java_spring.java_spring_crud.repositories.BrandRepository;
 import com.java_spring.java_spring_crud.services.abstracts.BrandService;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class BrandManager implements BrandService {
 
     private final BrandRepository brandRepository;
-
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void add(AddBrandRequest request) {
@@ -34,8 +35,7 @@ public class BrandManager implements BrandService {
             throw new RuntimeException("Bu isimde bir marka mevcut");
 
 
-        Brand brand = new Brand();
-        brand.setName(request.getName());
+        Brand brand = this.modelMapperService.forRequest().map(request, Brand.class);
         brandRepository.save(brand);
     }
 
@@ -50,8 +50,8 @@ public class BrandManager implements BrandService {
             throw new RuntimeException("Bu isimde bir marka mevcut, lütfen başka bir marka adı giriniz.");
         }
 
-        brandToUpdate.setName(request.getName());
-        brandRepository.save(brandToUpdate);
+        Brand brand = this.modelMapperService.forRequest().map(request, Brand.class);
+        brandRepository.save(brand);
     }
 
     @Override

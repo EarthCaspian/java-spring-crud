@@ -53,6 +53,11 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(x -> x
                         .requestMatchers(WHITE_LIST_URLS).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/brands/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/cars/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/customers/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/employees/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/locations/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/rentals/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)

@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.entities.Location;
@@ -34,7 +35,7 @@ public class RentalManager implements RentalService {
     private final CustomerService customerService;
     private final CarService carService;
     private final LocationService locationService;
-
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void add(AddRentalRequest request) {

@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.entities.Employee;
 import com.java_spring.java_spring_crud.entities.Location;
 import com.java_spring.java_spring_crud.repositories.EmployeeRepository;
@@ -24,6 +25,7 @@ public class LocationManager implements LocationService {
 
     private final LocationRepository locationRepository;
     private final EmployeeService employeeService;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void add(AddLocationRequest request) {

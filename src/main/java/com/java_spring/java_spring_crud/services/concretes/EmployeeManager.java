@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.entities.Employee;
 import com.java_spring.java_spring_crud.repositories.CustomerRepository;
@@ -24,7 +25,7 @@ public class EmployeeManager implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final CustomerService customerService;
-
+    private final ModelMapperService modelMapperService;
     @Override
     public void add(AddEmployeeRequest request) {
         if (request.getName().length() > 15)

@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.repositories.CustomerRepository;
 import com.java_spring.java_spring_crud.services.abstracts.CustomerService;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class CustomerManager implements CustomerService {
 
     private final CustomerRepository customerRepository;
-
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void add(AddCustomerRequest request) {

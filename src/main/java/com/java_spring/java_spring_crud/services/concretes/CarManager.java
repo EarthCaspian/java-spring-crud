@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.entities.Brand;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.repositories.CarRepository;
@@ -24,7 +25,7 @@ public class CarManager implements CarService {
 
     private final CarRepository carRepository;
     private final BrandService brandService;
-
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void add(AddCarRequest request) {

@@ -13,9 +13,8 @@ import org.hibernate.validator.constraints.Length;
 public class AddCustomerRequest {
 
     @Positive
-    @Min(value= 6, message = "6 haneli olmalıdır.")
-    @Max(value = 6,message = "6 haneli olmalıdır.")
-    private int nationalId;
+    @Size(min = 6, max = 6, message = "6 haneli olmalıdır.")
+    private String nationalId;
 
     @NotBlank
     @Length(max = 10, message = "Boş bırakılamaz, en fazla 10 karakter.")

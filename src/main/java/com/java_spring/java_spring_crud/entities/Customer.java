@@ -17,7 +17,7 @@ public class Customer extends BaseEntity
 {
 
     @Column(name = "national_id")
-    private int nationalId;
+    private String nationalId;
 
     @Column(name = "name")
     private String name;

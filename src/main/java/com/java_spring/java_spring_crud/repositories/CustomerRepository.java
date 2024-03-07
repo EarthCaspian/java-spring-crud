@@ -18,5 +18,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "(c.nationalId,c.name,c.surname) from Customer c where cast(c.nationalId as string) like %?1")
     List<GetCustomerNIDResponse> getByNIDEndsWith(int id);
 
-    boolean existsByNationalId(int id);
+    boolean existsByNationalId(String id);
 }

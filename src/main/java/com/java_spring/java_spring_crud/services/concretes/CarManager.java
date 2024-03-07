@@ -35,13 +35,9 @@ public class CarManager implements CarService {
         }
 
 
-        Car car = new Car();
-        car.setModelYear(request.getModelYear());
-        car.setModelName(request.getModelName());
-        car.setDailyPrice(request.getDailyPrice());
-        car.setColor(request.getColor());
+        Car car = this.modelMapperService.forRequest().map(request,Car.class);
         car.setStatus("Available");
-        car.setPlate(request.getPlate());
+
 
         Brand brand = brandService.getById(request.getBrandId());
         car.setBrand(brand);
@@ -82,7 +78,6 @@ public class CarManager implements CarService {
 
     @Override
     public List<GetModelNameResponse> findByModelNameContaining(String modelName) {
-       // return carRepository.findByModelNameContaining(modelName);
         return carRepository.findAll().stream().filter(car -> car.getModelName().contains(modelName)).map(
                 car -> new GetModelNameResponse(car.getModelName())).toList();
     }

@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
+import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.entities.Employee;
 import com.java_spring.java_spring_crud.repositories.CustomerRepository;
@@ -31,10 +32,7 @@ public class EmployeeManager implements EmployeeService {
         if (request.getName().length() > 15)
             throw new RuntimeException("Karakter sınırını aştınız.");
 
-        Employee employee = new Employee();
-        employee.setName(request.getName());
-        employee.setSurname(request.getSurname());
-        employee.setPhone(request.getPhone());
+        Employee employee = this.modelMapperService.forRequest().map(request,Employee.class);
         Customer customer = customerService.getById(request.getCustomer_relation());
         employee.setCustomer_relation(customer);
         employeeRepository.save(employee);

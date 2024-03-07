@@ -42,15 +42,13 @@ public class RentalManager implements RentalService {
         if (request.getStart_date().isBefore(LocalDate.now()) || request.getEnd_date().isBefore(LocalDate.now()))
             throw new RuntimeException("Yeni kiralama tarih aralıkları geçmişte olamaz.");
 
-        Rental rental = new Rental();
+        Rental rental = this.modelMapperService.forRequest().map(request,Rental.class);
         Customer customer = customerService.getById(request.getCustomer_id());
         rental.setCustomer(customer);
         Car car = carService.getById(request.getCar_id());
         rental.setCar(car);
         Location location = locationService.getById(request.getLocation_id());
         rental.setLocation(location);
-        rental.setStart_date(request.getStart_date());
-        rental.setEnd_date(request.getEnd_date());
         rentalRepository.save(rental);
     }
 

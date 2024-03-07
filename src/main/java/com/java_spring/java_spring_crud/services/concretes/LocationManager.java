@@ -32,9 +32,7 @@ public class LocationManager implements LocationService {
         if (request.getAddress().length() > 50)
             throw new RuntimeException("Adres çok uzun!");
 
-        Location location = new Location();
-        location.setAddress(request.getAddress());
-        location.setName(request.getName());
+        Location location = this.modelMapperService.forRequest().map(request,Location.class);
         Employee employee = employeeService.getById(request.getManagerId());
         location.setManagerId(employee);
         locationRepository.save(location);

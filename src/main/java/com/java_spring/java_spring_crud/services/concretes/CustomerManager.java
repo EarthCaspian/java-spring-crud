@@ -30,12 +30,7 @@ public class CustomerManager implements CustomerService {
             throw new RuntimeException("Bu kimlik numarası sistemde kayıtlı.");
         }
 
-        Customer customer = new Customer();
-        customer.setNationalId(request.getNationalId());
-        customer.setName(request.getName());
-        customer.setSurname(request.getSurname());
-        customer.setPhone(request.getPhone());
-        customer.setEmail(request.getEmail());
+        Customer customer = this.modelMapperService.forRequest().map(request,Customer.class);
         customerRepository.save(customer);
     }
 

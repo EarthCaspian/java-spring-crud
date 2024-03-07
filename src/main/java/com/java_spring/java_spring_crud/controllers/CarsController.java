@@ -25,7 +25,6 @@ public class CarsController
     private final CarService carService;
 
 
-    @PreAuthorize("hasRole('mod')")
     @GetMapping
     public List<String> getAll() {
        return carService.getAll();

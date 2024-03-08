@@ -29,7 +29,7 @@ public class BrandsController
         brandService.add(request);
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<String> getAll(){
         return brandService.getAll();
     }
@@ -49,12 +49,12 @@ public class BrandsController
         brandService.deleteById(request);
     }
 
-    @GetMapping("dto")
+    @GetMapping("/getByNameDto")
     public List<GetListBrandResponse> getByNameDto(@RequestParam String name) {
         return brandService.getByNameDto(name);
     }
 
-    @GetMapping("name")
+    @GetMapping("/getByName")
     public List<Brand> getByName(@RequestParam String name) {
         return brandService.getByName(name);
     }

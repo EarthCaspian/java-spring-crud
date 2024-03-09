@@ -25,7 +25,7 @@ public class CarsController
     private final CarService carService;
 
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<String> getAll() {
        return carService.getAll();
     }

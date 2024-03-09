@@ -23,7 +23,7 @@ public class EmployeesController
     private final EmployeeService employeeService;
 
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<String> getAll() {
         return employeeService.getAll();
     }

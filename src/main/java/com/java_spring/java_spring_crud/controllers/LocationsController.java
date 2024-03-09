@@ -23,7 +23,7 @@ public class LocationsController
     private final LocationService locationService;
 
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<String> getAll() {
         return locationService.getAll();
     }

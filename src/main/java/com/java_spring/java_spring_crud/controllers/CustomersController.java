@@ -24,7 +24,7 @@ public class CustomersController
    private final CustomerService customerService;
 
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<String> getAll() {
         return customerService.getAll();
     }

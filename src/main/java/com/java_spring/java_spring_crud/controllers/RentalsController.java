@@ -26,7 +26,7 @@ public class RentalsController
     private final RentalService rentalService;
 
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<GetAllRentalResponse> getAll(){
         return rentalService.getAll();
     }

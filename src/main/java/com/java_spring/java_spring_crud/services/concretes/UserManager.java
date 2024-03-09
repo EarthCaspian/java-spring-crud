@@ -44,6 +44,11 @@ public class UserManager implements UserService {
     }
 
     @Override
+    public User getById(int id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("No user with this id."));
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No user found!"));
     }

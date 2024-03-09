@@ -12,4 +12,6 @@ public interface UserService extends UserDetailsService{
 
     void save(User user);
     List<GetAllUsersResponse> getAll();
+
+    User getById(int id);
 }

@@ -85,16 +85,6 @@ public class RentalManager implements RentalService {
 
     @Override
     public List<GetAllRentalResponse> getAll() {
-        /*List<Rental> rentalList = rentalRepository.findAll();
-        List<GetAllRentalResponse> rentalResponses = new ArrayList<>();
-        rentalList.stream().forEach(x -> {
-            GetAllRentalResponse rentalResponseDto = new GetAllRentalResponse();
-            rentalResponseDto.setId(x.getId());
-            rentalResponseDto.setStart_date(x.getStart_date());
-            rentalResponseDto.setEnd_date(x.getEnd_date());
-            rentalResponses.add(rentalResponseDto);
-        });
-        return rentalResponses;*/
         return rentalRepository.getAll();
     }
 

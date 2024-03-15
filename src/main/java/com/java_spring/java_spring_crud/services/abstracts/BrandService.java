@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.abstracts;
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Brand;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.AddBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrandRequest;
@@ -10,8 +11,8 @@ import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBra
 import java.util.List;
 
 public interface BrandService {
-    void add(AddBrandRequest request);
-    void update(UpdateBrandRequest request);
+    Result add(AddBrandRequest request);
+    Result update(UpdateBrandRequest request);
     List<String> getAll();
     Brand getById(GetBrandRequest request);
     void deleteById(DeleteBrandRequest request);

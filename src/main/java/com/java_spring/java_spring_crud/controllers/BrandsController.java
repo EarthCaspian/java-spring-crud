@@ -1,6 +1,6 @@
 package com.java_spring.java_spring_crud.controllers;
 
-
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Brand;
 import com.java_spring.java_spring_crud.services.abstracts.BrandService;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.AddBrandRequest;
@@ -24,9 +24,9 @@ public class BrandsController
     private final BrandService brandService;
 
 
-    @PostMapping
-    public void add(@RequestBody @Valid AddBrandRequest request){
-        brandService.add(request);
+    @PostMapping("/add")
+    public Result add(@RequestBody @Valid AddBrandRequest request){
+        return brandService.add(request);
     }
 
     @GetMapping("/getAll")
@@ -35,8 +35,8 @@ public class BrandsController
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody @Valid UpdateBrandRequest request) {
-        brandService.update(request);
+    public Result update(@RequestBody @Valid UpdateBrandRequest request) {
+        return brandService.update(request);
     }
 
     @GetMapping("{id}")

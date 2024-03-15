@@ -1,9 +1,13 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
+import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
+import com.java_spring.java_spring_crud.core.utilities.results.SuccessResult;
 import com.java_spring.java_spring_crud.entities.Brand;
 import com.java_spring.java_spring_crud.repositories.BrandRepository;
 import com.java_spring.java_spring_crud.services.abstracts.BrandService;
+import com.java_spring.java_spring_crud.services.constants.Messages;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.AddBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
@@ -21,9 +25,10 @@ public class BrandManager implements BrandService {
 
     private final BrandRepository brandRepository;
     private final ModelMapperService modelMapperService;
+    private final MessageService messageService;
 
     @Override
-    public void add(AddBrandRequest request) {
+    public Result add(AddBrandRequest request) {
 
         if (request.getName().length() < 3)
             throw new RuntimeException("Marka adı 3 karakterden az olamaz.");
@@ -37,10 +42,12 @@ public class BrandManager implements BrandService {
 
         Brand brand = this.modelMapperService.forRequest().map(request, Brand.class);
         brandRepository.save(brand);
+
+        return new SuccessResult(messageService.getMessage(Messages.Brand.brandAddSuccess));
     }
 
     @Override
-    public void update(UpdateBrandRequest request) {
+    public Result update(UpdateBrandRequest request) {
         Brand brandToUpdate = brandRepository.findById(request.getId())
                                              .orElseThrow( () -> new RuntimeException("Marka bulunamadı."));
         if (request.getName().length() < 3)
@@ -52,6 +59,8 @@ public class BrandManager implements BrandService {
 
         Brand brand = this.modelMapperService.forRequest().map(request, Brand.class);
         brandRepository.save(brand);
+
+        return new SuccessResult(messageService.getMessage(Messages.Brand.brandUpdateSuccess));
     }
 
     @Override

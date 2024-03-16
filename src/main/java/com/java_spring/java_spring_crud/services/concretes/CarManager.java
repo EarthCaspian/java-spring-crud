@@ -1,11 +1,15 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
+import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
+import com.java_spring.java_spring_crud.core.utilities.results.SuccessResult;
 import com.java_spring.java_spring_crud.entities.Brand;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.repositories.CarRepository;
 import com.java_spring.java_spring_crud.services.abstracts.BrandService;
 import com.java_spring.java_spring_crud.services.abstracts.CarService;
+import com.java_spring.java_spring_crud.services.constants.Messages;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.AddCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.DeleteCarRequest;
@@ -26,9 +30,10 @@ public class CarManager implements CarService {
     private final CarRepository carRepository;
     private final BrandService brandService;
     private final ModelMapperService modelMapperService;
+    private final MessageService messageService;
 
     @Override
-    public void add(AddCarRequest request) {
+    public Result add(AddCarRequest request) {
 
         if (carRepository.existsCarByPlate(request.getPlate())){
             throw new RuntimeException("Aynı plaka ile 2. araç eklenemez.");
@@ -43,10 +48,11 @@ public class CarManager implements CarService {
         car.setBrand(brand);
         carRepository.save(car);
 
+        return new SuccessResult(messageService.getMessage(Messages.Car.carAddSuccess));
     }
 
     @Override
-    public void update(UpdateCarRequest request) {
+    public Result update(UpdateCarRequest request) {
         Car carToUpdate = carRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Model bulunamadı."));
         carToUpdate.setDailyPrice(request.getDailyPrice());
@@ -54,6 +60,8 @@ public class CarManager implements CarService {
         carToUpdate.setStatus(request.getStatus());
         carToUpdate.setPlate(request.getPlate());
         carRepository.save(carToUpdate);
+
+        return new SuccessResult(messageService.getMessage(Messages.Car.carUpdateSuccess));
     }
 
     @Override

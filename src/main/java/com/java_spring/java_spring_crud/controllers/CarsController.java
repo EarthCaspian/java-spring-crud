@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.controllers;
 
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.services.abstracts.CarService;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.AddCarRequest;
@@ -35,9 +36,9 @@ public class CarsController
         return carService.getById(request);
     }
 
-    @PostMapping
-    public void add(@RequestBody @Valid AddCarRequest request) {
-        carService.add(request);
+    @PostMapping("/add")
+    public Result add(@RequestBody @Valid AddCarRequest request) {
+       return carService.add(request);
     }
 
     @DeleteMapping("{id}")
@@ -46,8 +47,8 @@ public class CarsController
     }
 
     @PutMapping("{id}")
-    public void updateById(@Valid @RequestBody UpdateCarRequest request) {
-        carService.update(request);
+    public Result updateById(@Valid @RequestBody UpdateCarRequest request) {
+        return carService.update(request);
     }
 
     @GetMapping("contains")

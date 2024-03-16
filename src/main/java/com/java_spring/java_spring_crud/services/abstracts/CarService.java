@@ -2,6 +2,7 @@ package com.java_spring.java_spring_crud.services.abstracts;
 
 
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.AddCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.requests.DeleteCarRequest;
@@ -13,8 +14,8 @@ import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusRes
 import java.util.List;
 
 public interface CarService {
-    void add(AddCarRequest request);
-    void update(UpdateCarRequest request);
+    Result add(AddCarRequest request);
+    Result update(UpdateCarRequest request);
     List<String> getAll();
     Car getById(GetCarRequest request);
     void deleteById(DeleteCarRequest request);

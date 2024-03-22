@@ -30,4 +30,11 @@ public class Messages {
         public static String getSameCarPlateMessage="Car.getSameCarPlateMessage";
     }
 
+    public static class Employee{
+        public static String employeeAddSuccess = "Employee.employeeAddSuccess";
+        public static String employeeUpdateSuccess = "Employee.employeeUpdateSuccess";
+        public static String employeeDeleteSucess = "Employee.employeeDeleteSuccess";
+        public static String employeeNotFoundMessage = "Employee.employeeNotFoundMessage";
+    }
+
 }

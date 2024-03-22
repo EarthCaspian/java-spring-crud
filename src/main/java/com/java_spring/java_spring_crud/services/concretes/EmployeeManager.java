@@ -1,6 +1,9 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
+import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
+import com.java_spring.java_spring_crud.core.utilities.results.SuccessResult;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.entities.Employee;
@@ -8,6 +11,7 @@ import com.java_spring.java_spring_crud.repositories.CustomerRepository;
 import com.java_spring.java_spring_crud.repositories.EmployeeRepository;
 import com.java_spring.java_spring_crud.services.abstracts.CustomerService;
 import com.java_spring.java_spring_crud.services.abstracts.EmployeeService;
+import com.java_spring.java_spring_crud.services.constants.Messages;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.AddEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.DeleteEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.GetEmployeeRequest;
@@ -27,8 +31,9 @@ public class EmployeeManager implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final CustomerService customerService;
     private final ModelMapperService modelMapperService;
+    private final MessageService messageService;
     @Override
-    public void add(AddEmployeeRequest request) {
+    public Result add(AddEmployeeRequest request) {
         if (request.getName().length() > 15)
             throw new RuntimeException("Karakter sınırını aştınız.");
 
@@ -36,23 +41,27 @@ public class EmployeeManager implements EmployeeService {
         Customer customer = customerService.getById(request.getCustomer_relation());
         employee.setCustomer_relation(customer);
         employeeRepository.save(employee);
+
+        return new SuccessResult(messageService.getMessage(Messages.Employee.employeeAddSuccess));
     }
 
     @Override
-    public void deleteById(DeleteEmployeeRequest request) {
+    public Result deleteById(DeleteEmployeeRequest request) {
         Employee employeeToDelete = employeeRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
         employeeRepository.delete(employeeToDelete);
+        return new SuccessResult(messageService.getMessage(Messages.Employee.employeeDeleteSucess));
     }
 
     @Override
-    public void update(UpdateEmployeeRequest request) {
+    public Result update(UpdateEmployeeRequest request) {
         Employee employeeToUpdate = employeeRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
         employeeToUpdate.setPhone(request.getPhone());
         Customer customer = customerService.getById(request.getCustomer_relation());
         employeeToUpdate.setCustomer_relation(customer);
         employeeRepository.save(employeeToUpdate);
+        return new SuccessResult(messageService.getMessage(Messages.Employee.employeeUpdateSuccess));
     }
 
     @Override

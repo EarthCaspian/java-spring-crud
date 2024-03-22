@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.controllers;
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Employee;
 import com.java_spring.java_spring_crud.services.abstracts.EmployeeService;
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.AddEmployeeRequest;
@@ -34,18 +35,18 @@ public class EmployeesController
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid AddEmployeeRequest request) {
-        employeeService.add(request);
+    public Result add(@RequestBody @Valid AddEmployeeRequest request) {
+        return employeeService.add(request);
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(DeleteEmployeeRequest request) {
-        employeeService.deleteById(request);
+    public Result deleteById(DeleteEmployeeRequest request) {
+        return employeeService.deleteById(request);
     }
 
     @PutMapping("{id}")
-    public void update(@Valid @RequestBody UpdateEmployeeRequest request) {
-        employeeService.update(request);
+    public Result update(@Valid @RequestBody UpdateEmployeeRequest request) {
+       return employeeService.update(request);
     }
 
     @GetMapping("phoneStarts-with")

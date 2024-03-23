@@ -1,11 +1,15 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
 import com.java_spring.java_spring_crud.core.services.JwtService;
+import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
+import com.java_spring.java_spring_crud.core.utilities.results.SuccessResult;
 import com.java_spring.java_spring_crud.entities.RoleEntity;
 import com.java_spring.java_spring_crud.entities.User;
 import com.java_spring.java_spring_crud.services.abstracts.AuthService;
 import com.java_spring.java_spring_crud.services.abstracts.RoleService;
 import com.java_spring.java_spring_crud.services.abstracts.UserService;
+import com.java_spring.java_spring_crud.services.constants.Messages;
 import com.java_spring.java_spring_crud.services.dtos.user.CreateUserRequest;
 import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
 import lombok.AllArgsConstructor;
@@ -29,9 +33,10 @@ public class AuthManager implements AuthService {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final MessageService messageService;
 
     @Override
-    public String register(CreateUserRequest createUserRequest) {
+    public Result register(CreateUserRequest createUserRequest) {
         Set<RoleEntity> authorities = createUserRequest.getRoles().stream()
                 .map(roleService::findByName)
                 .filter(Objects::nonNull)
@@ -44,7 +49,7 @@ public class AuthManager implements AuthService {
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .build();
         userService.save(user);
-        return "User registered successfully";
+        return new SuccessResult(messageService.getMessage(Messages.User.userAddSuccess));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.controllers;
 
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.services.abstracts.AuthService;
 import com.java_spring.java_spring_crud.services.dtos.user.CreateUserRequest;
 import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
@@ -18,7 +19,7 @@ public class AuthController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(@RequestBody CreateUserRequest request) {
+    public Result register(@RequestBody CreateUserRequest request) {
         return authService.register(request);
     }
 

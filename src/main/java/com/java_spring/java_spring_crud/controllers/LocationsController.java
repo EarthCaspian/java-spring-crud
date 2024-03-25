@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.controllers;
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Location;
 import com.java_spring.java_spring_crud.services.abstracts.LocationService;
 import com.java_spring.java_spring_crud.services.dtos.location.requests.AddLocationRequest;
@@ -34,18 +35,18 @@ public class LocationsController
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid AddLocationRequest request) {
-        locationService.add(request);
+    public Result add(@RequestBody @Valid AddLocationRequest request) {
+       return locationService.add(request);
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(DeleteLocationRequest request) {
-        locationService.deleteById(request);
+    public Result deleteById(DeleteLocationRequest request) {
+        return locationService.deleteById(request);
     }
 
     @PutMapping("{id}")
-    public void update(@Valid @RequestBody UpdateLocationRequest request) {
-        locationService.update(request);
+    public Result update(@Valid @RequestBody UpdateLocationRequest request) {
+        return locationService.update(request);
     }
 
     @GetMapping("getByManager")

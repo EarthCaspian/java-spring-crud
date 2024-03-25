@@ -37,4 +37,10 @@ public class Messages {
         public static String employeeNotFoundMessage = "Employee.employeeNotFoundMessage";
     }
 
+    public static class Location{
+        public static String locationAddSuccess = "Location.locationAddSuccess";
+        public static String locationUpdateSuccess = "Location.locationUpdateSuccess";
+        public static String locationDeleteSuccess = "Location.locationDeleteSuccess";
+        public static String locationNotFoundMessage = "Location.locationNotFoundMessage";
+    }
 }

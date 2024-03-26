@@ -1,6 +1,9 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
+import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
+import com.java_spring.java_spring_crud.core.utilities.results.SuccessResult;
 import com.java_spring.java_spring_crud.entities.Car;
 import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.entities.Location;
@@ -13,6 +16,7 @@ import com.java_spring.java_spring_crud.services.abstracts.CarService;
 import com.java_spring.java_spring_crud.services.abstracts.CustomerService;
 import com.java_spring.java_spring_crud.services.abstracts.LocationService;
 import com.java_spring.java_spring_crud.services.abstracts.RentalService;
+import com.java_spring.java_spring_crud.services.constants.Messages;
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.AddRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.DeleteRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.GetRentalRequest;
@@ -36,9 +40,10 @@ public class RentalManager implements RentalService {
     private final CarService carService;
     private final LocationService locationService;
     private final ModelMapperService modelMapperService;
+    private final MessageService messageService;
 
     @Override
-    public void add(AddRentalRequest request) {
+    public Result add(AddRentalRequest request) {
         if (request.getStart_date().isBefore(LocalDate.now()) || request.getEnd_date().isBefore(LocalDate.now()))
             throw new RuntimeException("Yeni kiralama tarih aralıkları geçmişte olamaz.");
 
@@ -50,17 +55,19 @@ public class RentalManager implements RentalService {
         Location location = locationService.getById(request.getLocation_id());
         rental.setLocation(location);
         rentalRepository.save(rental);
+        return new SuccessResult(messageService.getMessage(Messages.Rental.rentalAddSuccess));
     }
 
     @Override
-    public void deleteById(DeleteRentalRequest request) {
+    public Result deleteById(DeleteRentalRequest request) {
         Rental rentalToDelete = rentalRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Kiralama bulunamadı."));
         rentalRepository.delete(rentalToDelete);
+        return new SuccessResult(messageService.getMessage(Messages.Rental.rentalDeleteSuccess));
     }
 
     @Override
-    public void update(UpdateRentalRequest request) {
+    public Result update(UpdateRentalRequest request) {
         if (request.getStart_date().isBefore(LocalDate.now()) || request.getEnd_date().isBefore(LocalDate.now()))
             throw new RuntimeException("Yeni kiralama tarih aralıkları geçmişte olamaz.");
 
@@ -75,6 +82,7 @@ public class RentalManager implements RentalService {
         Location location = locationService.getById(request.getLocation_id());
         rentalToUpdate.setLocation(location);
         rentalRepository.save(rentalToUpdate);
+        return new SuccessResult(messageService.getMessage(Messages.Rental.rentalUpdateSuccess));
     }
 
     @Override

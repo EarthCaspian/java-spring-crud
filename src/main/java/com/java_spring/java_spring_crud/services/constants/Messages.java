@@ -33,7 +33,7 @@ public class Messages {
     public static class Employee{
         public static String employeeAddSuccess = "Employee.employeeAddSuccess";
         public static String employeeUpdateSuccess = "Employee.employeeUpdateSuccess";
-        public static String employeeDeleteSucess = "Employee.employeeDeleteSuccess";
+        public static String employeeDeleteSuccess = "Employee.employeeDeleteSuccess";
         public static String employeeNotFoundMessage = "Employee.employeeNotFoundMessage";
     }
 
@@ -42,5 +42,11 @@ public class Messages {
         public static String locationUpdateSuccess = "Location.locationUpdateSuccess";
         public static String locationDeleteSuccess = "Location.locationDeleteSuccess";
         public static String locationNotFoundMessage = "Location.locationNotFoundMessage";
+    }
+
+    public static class Rental{
+        public static String rentalAddSuccess = "Rental.rentalAddSuccess";
+        public static String rentalUpdateSuccess = "Rental.rentalUpdateSuccess";
+        public static String rentalDeleteSuccess = "Rental.rentalDeleteSuccess";
     }
 }

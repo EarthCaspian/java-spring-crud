@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.controllers;
 
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Rental;
 import com.java_spring.java_spring_crud.repositories.RentalRepository;
 import com.java_spring.java_spring_crud.services.abstracts.RentalService;
@@ -37,18 +38,18 @@ public class RentalsController
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid AddRentalRequest request) {
-        rentalService.add(request);
+    public Result add(@RequestBody @Valid AddRentalRequest request) {
+        return rentalService.add(request);
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(DeleteRentalRequest request) {
-        rentalService.deleteById(request);
+    public Result deleteById(DeleteRentalRequest request) {
+        return rentalService.deleteById(request);
     }
 
     @PutMapping("{id}")
-    public void update(@Valid @RequestBody UpdateRentalRequest request) {
-        rentalService.update(request);
+    public Result update(@Valid @RequestBody UpdateRentalRequest request) {
+        return rentalService.update(request);
     }
 
     @GetMapping("getByDate")

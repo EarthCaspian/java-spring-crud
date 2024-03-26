@@ -50,7 +50,7 @@ public class EmployeeManager implements EmployeeService {
         Employee employeeToDelete = employeeRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
         employeeRepository.delete(employeeToDelete);
-        return new SuccessResult(messageService.getMessage(Messages.Employee.employeeDeleteSucess));
+        return new SuccessResult(messageService.getMessage(Messages.Employee.employeeDeleteSuccess));
     }
 
     @Override

@@ -49,4 +49,10 @@ public class Messages {
         public static String rentalUpdateSuccess = "Rental.rentalUpdateSuccess";
         public static String rentalDeleteSuccess = "Rental.rentalDeleteSuccess";
     }
+
+    public static class Customer {
+        public static String customerAddSuccess = "Customer.customerAddSuccess";
+        public static String customerUpdateSuccess = "Customer.customerUpdateSuccess";
+        public static String customerDeleteSuccess = "Customer.customerDeleteSuccess";
+    }
 }

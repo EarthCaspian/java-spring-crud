@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.controllers;
 
 
+import com.java_spring.java_spring_crud.core.utilities.results.Result;
 import com.java_spring.java_spring_crud.entities.Customer;
 import com.java_spring.java_spring_crud.services.abstracts.CustomerService;
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.AddCustomerRequest;
@@ -35,18 +36,18 @@ public class CustomersController
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid AddCustomerRequest request) {
-        customerService.add(request);
+    public Result add(@RequestBody @Valid AddCustomerRequest request) {
+        return customerService.add(request);
     }
 
     @DeleteMapping
-    public void deleteById(DeleteCustomerRequest request){
-        customerService.deleteById(request);
+    public Result deleteById(DeleteCustomerRequest request){
+        return customerService.deleteById(request);
     }
 
     @PutMapping("{id}")
-    public void updateById(@Valid @RequestBody UpdateCustomerRequest request) {
-        customerService.update(request);
+    public Result updateById(@Valid @RequestBody UpdateCustomerRequest request) {
+        return customerService.update(request);
     }
 
     @GetMapping("nameSurname")

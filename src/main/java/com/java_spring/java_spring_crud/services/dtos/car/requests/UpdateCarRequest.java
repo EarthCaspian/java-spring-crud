@@ -26,6 +26,9 @@ public class UpdateCarRequest {
     @Length(min = 6, message = "Plaka en az 6 haneden oluşmalıdır.")
     private String plate;
 
+    @NotBlank(message = "Model adı boş olamaz.")
+    private String modelName;
+
     @Positive
     @Min(value = 100)
     private double dailyPrice;

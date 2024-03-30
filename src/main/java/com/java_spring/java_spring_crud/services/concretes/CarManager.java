@@ -17,6 +17,7 @@ import com.java_spring.java_spring_crud.services.dtos.car.requests.GetCarRequest
 import com.java_spring.java_spring_crud.services.dtos.car.requests.UpdateCarRequest;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetModelNameResponse;
 import com.java_spring.java_spring_crud.services.dtos.car.responses.GetStatusResponse;
+import com.java_spring.java_spring_crud.services.rules.CarBusinessRule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +32,12 @@ public class CarManager implements CarService {
     private final BrandService brandService;
     private final ModelMapperService modelMapperService;
     private final MessageService messageService;
+    private final CarBusinessRule carBusinessRule;
 
     @Override
     public Result add(AddCarRequest request) {
 
-        if (carRepository.existsCarByPlate(request.getPlate())){
-            throw new RuntimeException("Aynı plaka ile 2. araç eklenemez.");
-        }
-
+        carBusinessRule.existsCarByPlate(request.getPlate());
 
         Car car = this.modelMapperService.forRequest().map(request,Car.class);
         car.setStatus("Available");
@@ -53,13 +52,10 @@ public class CarManager implements CarService {
 
     @Override
     public Result update(UpdateCarRequest request) {
-        Car carToUpdate = carRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Model bulunamadı."));
-        carToUpdate.setDailyPrice(request.getDailyPrice());
-        carToUpdate.setColor(request.getColor());
-        carToUpdate.setStatus(request.getStatus());
-        carToUpdate.setPlate(request.getPlate());
-        carRepository.save(carToUpdate);
+        carRepository.existsById(request.getId());
+        carRepository.existsCarByPlate(request.getPlate());
+        Car car = this.modelMapperService.forRequest().map(request, Car.class);
+        carRepository.save(car);
 
         return new SuccessResult(messageService.getMessage(Messages.Car.carUpdateSuccess));
     }

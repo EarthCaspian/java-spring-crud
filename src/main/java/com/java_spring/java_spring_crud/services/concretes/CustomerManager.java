@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.exceptions.types.NotFoundException;
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import com.java_spring.java_spring_crud.core.utilities.results.Result;
@@ -14,6 +15,7 @@ import com.java_spring.java_spring_crud.services.dtos.customer.requests.GetCusto
 import com.java_spring.java_spring_crud.services.dtos.customer.requests.UpdateCustomerRequest;
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNIDResponse;
 import com.java_spring.java_spring_crud.services.dtos.customer.responses.GetCustomerNameResponse;
+import com.java_spring.java_spring_crud.services.rules.CustomerBusinessRule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +29,10 @@ public class CustomerManager implements CustomerService {
     private final CustomerRepository customerRepository;
     private final ModelMapperService modelMapperService;
     private final MessageService messageService;
+    private final CustomerBusinessRule customerBusinessRule;
 
     @Override
     public Result add(AddCustomerRequest request) {
-
-        if (customerRepository.existsByNationalId(request.getNationalId())){
-            throw new RuntimeException("Bu kimlik numarası sistemde kayıtlı.");
-        }
-
         Customer customer = this.modelMapperService.forRequest().map(request,Customer.class);
         customerRepository.save(customer);
         return new SuccessResult(messageService.getMessage(Messages.Customer.customerAddSuccess));
@@ -43,7 +41,7 @@ public class CustomerManager implements CustomerService {
     @Override
     public Result update(UpdateCustomerRequest request) {
         Customer customerToUpdate = customerRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Müşteri bulunamadı."));
+                .orElseThrow(() -> new NotFoundException(messageService.getMessage(Messages.Customer.getCustomerNotFoundMessage)));
         customerToUpdate.setPhone(request.getPhone());
         customerToUpdate.setEmail(request.getEmail());
         customerRepository.save(customerToUpdate);
@@ -52,16 +50,15 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public Result deleteById(DeleteCustomerRequest request) {
-        Customer customerToDelete = customerRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Müşteri bulunamadı."));
-        customerRepository.delete(customerToDelete);
+        customerBusinessRule.existsCustomerById(request.getId());
+        customerRepository.deleteById(request.getId());
         return new SuccessResult(messageService.getMessage(Messages.Customer.customerDeleteSuccess));
     }
 
     @Override
     public Customer getById(GetCustomerRequest request) {
         return customerRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Müşteri bulunamadı."));
+                .orElseThrow(() -> new NotFoundException(messageService.getMessage(Messages.Customer.getCustomerNotFoundMessage)));
     }
 
     @Override
@@ -85,6 +82,6 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public Customer getById(int id) {
-        return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Müşteri bulunamadı."));
+        return customerRepository.findById(id).orElseThrow(() -> new NotFoundException(messageService.getMessage(Messages.Customer.getCustomerNotFoundMessage)));
     }
 }

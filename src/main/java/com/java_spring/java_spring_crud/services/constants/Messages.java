@@ -54,5 +54,6 @@ public class Messages {
         public static String customerAddSuccess = "Customer.customerAddSuccess";
         public static String customerUpdateSuccess = "Customer.customerUpdateSuccess";
         public static String customerDeleteSuccess = "Customer.customerDeleteSuccess";
+        public static String getCustomerNotFoundMessage = "Customer.getCustomerNotFoundMessage";
     }
 }

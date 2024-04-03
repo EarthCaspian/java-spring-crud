@@ -48,6 +48,9 @@ public class Messages {
         public static String rentalAddSuccess = "Rental.rentalAddSuccess";
         public static String rentalUpdateSuccess = "Rental.rentalUpdateSuccess";
         public static String rentalDeleteSuccess = "Rental.rentalDeleteSuccess";
+        public static String rentalNotFoundMessage = "Rental.rentalNotFoundMessage";
+        public static String rentalStartDateError = "Rental.faultyStartDate";
+        public static String rentalEndDateError = "Rental.faultyEndDate";
     }
 
     public static class Customer {

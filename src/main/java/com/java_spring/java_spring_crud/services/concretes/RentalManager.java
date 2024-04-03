@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.exceptions.types.BusinessException;
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import com.java_spring.java_spring_crud.core.utilities.results.Result;
@@ -23,6 +24,7 @@ import com.java_spring.java_spring_crud.services.dtos.rental.requests.GetRentalR
 import com.java_spring.java_spring_crud.services.dtos.rental.requests.UpdateRentalRequest;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRentalResponse;
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetRentalByDateResponse;
+import com.java_spring.java_spring_crud.services.rules.RentalBusinessRule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,46 +43,58 @@ public class RentalManager implements RentalService {
     private final LocationService locationService;
     private final ModelMapperService modelMapperService;
     private final MessageService messageService;
+    private final RentalBusinessRule rentalBusinessRule;
 
     @Override
     public Result add(AddRentalRequest request) {
-        if (request.getStart_date().isBefore(LocalDate.now()) || request.getEnd_date().isBefore(LocalDate.now()))
-            throw new RuntimeException("Yeni kiralama tarih aralıkları geçmişte olamaz.");
+
+        rentalBusinessRule.checkStartDate(request.getStart_date());
+        rentalBusinessRule.checkEndDate(request.getStart_date(),request.getEnd_date());
 
         Rental rental = this.modelMapperService.forRequest().map(request,Rental.class);
+
         Customer customer = customerService.getById(request.getCustomer_id());
         rental.setCustomer(customer);
+
         Car car = carService.getById(request.getCar_id());
         rental.setCar(car);
+
         Location location = locationService.getById(request.getLocation_id());
         rental.setLocation(location);
+
         rentalRepository.save(rental);
         return new SuccessResult(messageService.getMessage(Messages.Rental.rentalAddSuccess));
     }
 
     @Override
     public Result deleteById(DeleteRentalRequest request) {
-        Rental rentalToDelete = rentalRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Kiralama bulunamadı."));
-        rentalRepository.delete(rentalToDelete);
+        rentalBusinessRule.existsRentalById(request.getId());
+        rentalRepository.deleteById(request.getId());
         return new SuccessResult(messageService.getMessage(Messages.Rental.rentalDeleteSuccess));
     }
 
     @Override
     public Result update(UpdateRentalRequest request) {
-        if (request.getStart_date().isBefore(LocalDate.now()) || request.getEnd_date().isBefore(LocalDate.now()))
-            throw new RuntimeException("Yeni kiralama tarih aralıkları geçmişte olamaz.");
 
-        Rental rentalToUpdate = rentalRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Kiralama bulunamadı."));
+        rentalBusinessRule.checkStartDate(request.getStart_date());
+        rentalBusinessRule.checkEndDate(request.getStart_date(),request.getEnd_date());
+
+        rentalBusinessRule.existsRentalById(request.getId());
+
+        Rental rentalToUpdate = this.modelMapperService.forRequest().map(request,Rental.class);
+
         Customer customer = customerService.getById(request.getCustomer_id());
         rentalToUpdate.setCustomer(customer);
+
         Car car = carService.getById(request.getCar_id());
         rentalToUpdate.setCar(car);
+
         rentalToUpdate.setStart_date(request.getStart_date());
         rentalToUpdate.setEnd_date(request.getEnd_date());
+
         Location location = locationService.getById(request.getLocation_id());
         rentalToUpdate.setLocation(location);
+
         rentalRepository.save(rentalToUpdate);
         return new SuccessResult(messageService.getMessage(Messages.Rental.rentalUpdateSuccess));
     }
@@ -88,7 +102,7 @@ public class RentalManager implements RentalService {
     @Override
     public Rental getById(GetRentalRequest request) {
         return rentalRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Kiralama bulunamadı."));
+                .orElseThrow(() -> new BusinessException(Messages.Rental.rentalNotFoundMessage));
     }
 
     @Override

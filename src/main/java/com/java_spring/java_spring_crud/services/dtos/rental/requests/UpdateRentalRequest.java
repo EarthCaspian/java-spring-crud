@@ -23,10 +23,10 @@ public class UpdateRentalRequest {
     @Positive
     private int car_id;
 
-    @FutureOrPresent(message = "Kiralama başlangıç tarihi bugün veya gelecek bir tarih olmalıdır.")
+    @FutureOrPresent
     private LocalDate start_date;
 
-    @Future(message = "Kiralama bitiş tarihi gelecekte bir tarih olmalıdır.")
+    @Future
     private LocalDate end_date;
 
     @Positive

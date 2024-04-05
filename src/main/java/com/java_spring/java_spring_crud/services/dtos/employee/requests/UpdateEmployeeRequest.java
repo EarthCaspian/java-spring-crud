@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +17,15 @@ public class UpdateEmployeeRequest {
     private int id;
 
     @NotBlank
-    @Pattern(regexp = "^[0-9]*$", message = "Sadece rakam giriniz.")
+    @Length
+    private String name;
+
+    @NotBlank
+    @Length
+    private String surname;
+
+    @NotBlank
+    @Pattern(regexp = "^[0-9]*$")
     private String phone;
 
     @Positive

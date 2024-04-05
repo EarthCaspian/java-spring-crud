@@ -15,15 +15,15 @@ import org.hibernate.validator.constraints.Length;
 public class AddEmployeeRequest {
 
     @NotBlank
-    @Length(max = 20, message = "Boş bırakılamaz, en fazla 20 karakter.")
+    @Length
     private String name;
 
     @NotBlank
-    @Length(max = 20, message = "Boş bırakılamaz, en fazla 20 karakter.")
+    @Length
     private String surname;
 
-    @NotBlank(message = "Boş bırakılamaz.")
-    @Pattern(regexp = "^[0-9]*$", message = "Sadece rakam giriniz.")
+    @NotBlank
+    @Pattern(regexp = "^[0-9]*$")
     private String phone;
 
     @Positive

@@ -35,6 +35,7 @@ public class Messages {
         public static String employeeUpdateSuccess = "Employee.employeeUpdateSuccess";
         public static String employeeDeleteSuccess = "Employee.employeeDeleteSuccess";
         public static String employeeNotFoundMessage = "Employee.employeeNotFoundMessage";
+        public static String employeeNameCheck = "Employee.employeeNameCheck";
     }
 
     public static class Location{

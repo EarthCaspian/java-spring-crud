@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.exceptions.types.BusinessException;
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import com.java_spring.java_spring_crud.core.utilities.results.Result;
@@ -18,6 +19,7 @@ import com.java_spring.java_spring_crud.services.dtos.employee.requests.GetEmplo
 import com.java_spring.java_spring_crud.services.dtos.employee.requests.UpdateEmployeeRequest;
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeeByRelationResponse;
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeePhoneResponse;
+import com.java_spring.java_spring_crud.services.rules.EmployeeBusinessRule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +34,12 @@ public class EmployeeManager implements EmployeeService {
     private final CustomerService customerService;
     private final ModelMapperService modelMapperService;
     private final MessageService messageService;
+    private final EmployeeBusinessRule employeeBusinessRule;
+
     @Override
     public Result add(AddEmployeeRequest request) {
-        if (request.getName().length() > 15)
-            throw new RuntimeException("Karakter sınırını aştınız.");
+
+        employeeBusinessRule.checkEmployeeNameLength(request.getName());
 
         Employee employee = this.modelMapperService.forRequest().map(request,Employee.class);
         Customer customer = customerService.getById(request.getCustomer_relation());
@@ -47,27 +51,30 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public Result deleteById(DeleteEmployeeRequest request) {
-        Employee employeeToDelete = employeeRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
-        employeeRepository.delete(employeeToDelete);
+        employeeBusinessRule.existsById(request.getId());
+        employeeRepository.deleteById(request.getId());
         return new SuccessResult(messageService.getMessage(Messages.Employee.employeeDeleteSuccess));
     }
 
     @Override
     public Result update(UpdateEmployeeRequest request) {
-        Employee employeeToUpdate = employeeRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
+        employeeBusinessRule.existsById(request.getId());
+
+        Employee employeeToUpdate = this.modelMapperService.forRequest().map(request,Employee.class);
         employeeToUpdate.setPhone(request.getPhone());
+
         Customer customer = customerService.getById(request.getCustomer_relation());
         employeeToUpdate.setCustomer_relation(customer);
+
         employeeRepository.save(employeeToUpdate);
+
         return new SuccessResult(messageService.getMessage(Messages.Employee.employeeUpdateSuccess));
     }
 
     @Override
     public Employee getById(GetEmployeeRequest request) {
         return employeeRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
+                .orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.Employee.employeeNotFoundMessage)));
     }
 
     @Override
@@ -92,6 +99,6 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public Employee getById(int id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Çalışan bulunamadı."));
+        return employeeRepository.findById(id).orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.Employee.employeeNotFoundMessage)));
     }
 }

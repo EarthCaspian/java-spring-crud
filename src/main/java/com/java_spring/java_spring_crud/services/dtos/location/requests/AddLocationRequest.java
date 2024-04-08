@@ -1,6 +1,7 @@
 package com.java_spring.java_spring_crud.services.dtos.location.requests;
 
 
+import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -13,12 +14,12 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class AddLocationRequest {
 
-    @NotBlank(message = "Boş bırakılamaz.")
-    @Length(max = 50, message = "Boş bırakılamaz, en fazla 50 karakter.")
+    @NotBlank
+    @Length(max = 50)
     private String address;
 
-    @NotBlank(message = "Boş bırakılamaz.")
-    @Length(max = 30, message = "Boş bırakılamaz, en fazla 30 karakter.")
+    @NotBlank
+    @Length(max = 30)
     private String name;
 
     @Positive

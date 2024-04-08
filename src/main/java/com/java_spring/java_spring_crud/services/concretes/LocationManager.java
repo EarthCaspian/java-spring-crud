@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.exceptions.types.BusinessException;
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import com.java_spring.java_spring_crud.core.utilities.results.Result;
@@ -34,9 +35,6 @@ public class LocationManager implements LocationService {
 
     @Override
     public Result add(AddLocationRequest request) {
-        if (request.getAddress().length() > 50)
-            throw new RuntimeException("Adres çok uzun!");
-
         Location location = this.modelMapperService.forRequest().map(request,Location.class);
         Employee employee = employeeService.getById(request.getManagerId());
         location.setManagerId(employee);
@@ -47,7 +45,7 @@ public class LocationManager implements LocationService {
     @Override
     public Result deleteById(DeleteLocationRequest request) {
         Location locationToDelete = locationRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Şube bulunamadı."));
+                .orElseThrow(() -> new BusinessException(Messages.Location.locationNotFoundMessage));
         locationRepository.delete(locationToDelete);
         return new SuccessResult(messageService.getMessage(Messages.Location.locationDeleteSuccess));
     }
@@ -55,7 +53,7 @@ public class LocationManager implements LocationService {
     @Override
     public Result update(UpdateLocationRequest request) {
         Location locationToUpdate = locationRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Şube bulunamadı."));
+                .orElseThrow(() -> new BusinessException(Messages.Location.locationNotFoundMessage));
         locationToUpdate.setAddress(request.getAddress());
         locationToUpdate.setName(request.getName());
         Employee employee = employeeService.getById(request.getManagerId());
@@ -67,7 +65,7 @@ public class LocationManager implements LocationService {
     @Override
     public Location getById(GetLocationRequest request) {
         return locationRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Şube bulunamadı."));
+                .orElseThrow(() -> new BusinessException(Messages.Location.locationNotFoundMessage));
     }
 
     @Override
@@ -92,6 +90,6 @@ public class LocationManager implements LocationService {
 
     @Override
     public Location getById(int id) {
-        return locationRepository.findById(id).orElseThrow(() -> new RuntimeException("Lokasyon bulunamadı."));
+        return locationRepository.findById(id).orElseThrow(() -> new BusinessException(Messages.Location.locationNotFoundMessage));
     }
 }

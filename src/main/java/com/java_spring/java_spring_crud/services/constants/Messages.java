@@ -20,6 +20,8 @@ public class Messages {
         public static String brandDeleteSuccess = "Brand.brandDeleteSuccess";
         public static String getBrandNotFoundMessage ="Brand.getBrandNotFoundMessage";
         public static String getBrandNameAlreadyExistsMessage="Brand.getBrandNameAlreadyExistsMessage";
+        public static String brandNameLengthCheck="Brand.brandNameLengthCheck";
+        public static String brandNameCapitalLetterCheck="Brand.brandNameCapitalLetterCheck";
     }
 
     public static class Car{

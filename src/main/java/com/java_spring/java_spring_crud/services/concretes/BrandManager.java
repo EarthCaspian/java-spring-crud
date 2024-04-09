@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.exceptions.types.BusinessException;
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import com.java_spring.java_spring_crud.core.utilities.results.Result;
@@ -13,6 +14,7 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.DeleteBrand
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.GetBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrandRequest;
 import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
+import com.java_spring.java_spring_crud.services.rules.BrandBusinessRule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +28,15 @@ public class BrandManager implements BrandService {
     private final BrandRepository brandRepository;
     private final ModelMapperService modelMapperService;
     private final MessageService messageService;
+    private final BrandBusinessRule brandBusinessRule;
 
     @Override
     public Result add(AddBrandRequest request) {
 
-        if (request.getName().length() < 3)
-            throw new RuntimeException("Marka adı 3 karakterden az olamaz.");
 
-        if (!Character.isUpperCase(request.getName().charAt(0)))
-            throw new RuntimeException("Marka adı büyük harfle başlamalıdır.");
-
-        if (brandRepository.existsByName(request.getName()))
-            throw new RuntimeException("Bu isimde bir marka mevcut");
+        brandBusinessRule.checkBrandNameLength(request.getName());
+        brandBusinessRule.checkUpperCase(request.getName());
+        brandBusinessRule.brandNameAlreadyExists(request.getName());
 
 
         Brand brand = this.modelMapperService.forRequest().map(request, Brand.class);
@@ -49,13 +48,11 @@ public class BrandManager implements BrandService {
     @Override
     public Result update(UpdateBrandRequest request) {
         Brand brandToUpdate = brandRepository.findById(request.getId())
-                                             .orElseThrow( () -> new RuntimeException("Marka bulunamadı."));
-        if (request.getName().length() < 3)
-            throw new RuntimeException("Marka adı 3 karakterden az olamaz.");
+                                             .orElseThrow( () -> new BusinessException(messageService.getMessage(Messages.Brand.getBrandNotFoundMessage)));
 
-        if (brandRepository.existsByName(request.getName())) {
-            throw new RuntimeException("Bu isimde bir marka mevcut, lütfen başka bir marka adı giriniz.");
-        }
+        brandBusinessRule.checkBrandNameLength(request.getName());
+        brandBusinessRule.checkUpperCase(request.getName());
+        brandBusinessRule.brandNameAlreadyExists(request.getName());
 
         Brand brand = this.modelMapperService.forRequest().map(request, Brand.class);
         brandRepository.save(brand);
@@ -73,13 +70,13 @@ public class BrandManager implements BrandService {
     @Override
     public Brand getById(GetBrandRequest request) {
         return brandRepository.findById(request.getId())
-                                               .orElseThrow( () -> new RuntimeException("Marka bulunamadı."));
+                                               .orElseThrow( () -> new BusinessException(messageService.getMessage(Messages.Brand.getBrandNotFoundMessage)));
     }
 
     @Override
     public void deleteById(DeleteBrandRequest request) {
         Brand brandToDelete = brandRepository.findById(request.getId())
-                                             .orElseThrow(() -> new RuntimeException("Marka bulunamadı."));
+                                             .orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.Brand.getBrandNotFoundMessage)));
         brandRepository.delete(brandToDelete);
     }
 
@@ -98,7 +95,7 @@ public class BrandManager implements BrandService {
 
     @Override
     public Brand getById(int id) {
-        return brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Marka bulunamadı."));
+        return brandRepository.findById(id).orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.Brand.getBrandNotFoundMessage)));
     }
 
 

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddBrandRequest
 {
-    @NotBlank(message = "Boş bırakılamaz.")
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "Rakam ve özel karakter içeremez, yalnızca harf kullanınız.")
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z]*$")
     private String name;
 }

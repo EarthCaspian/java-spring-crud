@@ -13,23 +13,23 @@ import org.hibernate.validator.constraints.Length;
 public class AddCustomerRequest {
 
     @Positive
-    @Size(min = 6, max = 6, message = "6 haneli olmalıdır.")
+    @Size(min = 6, max = 6)
     private String nationalId;
 
     @NotBlank
-    @Length(max = 10, message = "Boş bırakılamaz, en fazla 10 karakter.")
+    @Length(max = 10)
     private String name;
 
     @NotBlank
-    @Length(max = 20, message = "Boş bırakılamaz, en fazla 20 karakter.")
+    @Length(max = 20)
     private String surname;
 
     @NotBlank
-    @Length(max = 7, message = "Boş bırakılamaz, en fazla 7 karakter.")
-    @Pattern(regexp = "^[0-9]*$", message = "Sadece rakam giriniz.")
+    @Length(max = 7)
+    @Pattern(regexp = "^[0-9]*$")
     private String phone;
 
     @NotBlank
-    @Length(max = 20, message = "Boş bırakılamaz, en fazla 20 karakter.")
+    @Length(max = 20)
     private String email;
 }

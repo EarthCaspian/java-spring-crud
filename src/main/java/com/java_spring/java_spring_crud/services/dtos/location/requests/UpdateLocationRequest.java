@@ -16,12 +16,12 @@ public class UpdateLocationRequest {
     @Positive
     private int id;
 
-    @NotBlank(message = "Boş bırakılamaz.")
-    @Length(max = 50, message = "Boş bırakılamaz, en fazla 50 karakter.")
+    @NotBlank
+    @Length(max = 50)
     private String address;
 
-    @NotBlank(message = "Boş bırakılamaz.")
-    @Length(max = 30, message = "Boş bırakılamaz, en fazla 30 karakter.")
+    @NotBlank
+    @Length(max = 30)
     private String name;
 
     @Positive

@@ -15,7 +15,7 @@ public class UpdateBrandRequest {
     @Positive
     private int id;
 
-    @NotBlank(message = "Boş bırakılamaz.")
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "Rakam ve özel karakter içeremez, yalnızca harf kullanınız.")
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z]*$")
     private String name;
 }

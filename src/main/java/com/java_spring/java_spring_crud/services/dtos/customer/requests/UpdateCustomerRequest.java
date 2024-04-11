@@ -12,11 +12,11 @@ public class UpdateCustomerRequest {
     private int id;
 
     @NotBlank
-    @Length(max = 7, message = "Boş bırakılamaz, en fazla 7 karakter.")
-    @Pattern(regexp = "^[0-9]*$", message = "Sadece rakam giriniz.")
+    @Length(max = 7)
+    @Pattern(regexp = "^[0-9]*$")
     private String phone;
 
     @NotBlank
-    @Length(max = 20, message = "Boş bırakılamaz, en fazla 20 karakter.")
+    @Length(max = 20)
     private String email;
 }

@@ -1,5 +1,6 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.exceptions.types.BusinessException;
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
 import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import com.java_spring.java_spring_crud.core.utilities.results.Result;
@@ -70,13 +71,13 @@ public class CarManager implements CarService {
     @Override
     public Car getById(GetCarRequest request) {
         return carRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Model bulunamadı."));
+                .orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.Car.getCarNotFoundMessage)));
     }
 
     @Override
     public void deleteById(DeleteCarRequest request) {
         Car carToDelete = carRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("Model bulunamadı."));
+                .orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.Car.getCarNotFoundMessage)));
         carRepository.delete(carToDelete);
     }
 
@@ -93,6 +94,6 @@ public class CarManager implements CarService {
 
     @Override
     public Car getById(int id) {
-        return carRepository.findById(id).orElseThrow(() -> new RuntimeException("Araç bulunamadı."));
+        return carRepository.findById(id).orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.Car.getCarNotFoundMessage)));
     }
 }

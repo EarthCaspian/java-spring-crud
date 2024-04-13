@@ -1,11 +1,14 @@
 package com.java_spring.java_spring_crud.services.concretes;
 
+import com.java_spring.java_spring_crud.core.utilities.exceptions.types.NotFoundException;
 import com.java_spring.java_spring_crud.core.utilities.mappers.ModelMapperService;
+import com.java_spring.java_spring_crud.core.utilities.messages.MessageService;
 import com.java_spring.java_spring_crud.entities.RoleEntity;
 import com.java_spring.java_spring_crud.entities.User;
 import com.java_spring.java_spring_crud.repositories.UserRepository;
 import com.java_spring.java_spring_crud.services.abstracts.RoleService;
 import com.java_spring.java_spring_crud.services.abstracts.UserService;
+import com.java_spring.java_spring_crud.services.constants.Messages;
 import com.java_spring.java_spring_crud.services.dtos.user.CreateUserRequest;
 import com.java_spring.java_spring_crud.services.dtos.user.LoginRequest;
 import com.java_spring.java_spring_crud.services.dtos.user.responses.GetAllUsersResponse;
@@ -28,6 +31,7 @@ public class UserManager implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapperService modelMapperService;
+    private final MessageService messageService;
 
 
     @Override
@@ -45,7 +49,7 @@ public class UserManager implements UserService {
 
     @Override
     public User getById(int id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("No user with this id."));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(messageService.getMessage(Messages.User.getUserNotFoundMessage)));
     }
 
     @Override

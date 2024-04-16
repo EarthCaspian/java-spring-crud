@@ -11,6 +11,7 @@ import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmpl
 import com.java_spring.java_spring_crud.services.dtos.employee.responses.GetEmployeePhoneResponse;
 import jakarta.validation.Valid;
 import lombok.Data;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class EmployeesController
         return employeeService.getById(request);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping
     public Result add(@RequestBody @Valid AddEmployeeRequest request) {
         return employeeService.add(request);
@@ -44,6 +46,7 @@ public class EmployeesController
         return employeeService.deleteById(request);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PutMapping("{id}")
     public Result update(@Valid @RequestBody UpdateEmployeeRequest request) {
        return employeeService.update(request);

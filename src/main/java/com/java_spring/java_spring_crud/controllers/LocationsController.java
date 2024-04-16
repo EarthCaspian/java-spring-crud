@@ -11,6 +11,7 @@ import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLoca
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
 import jakarta.validation.Valid;
 import lombok.Data;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,18 @@ public class LocationsController
     private final LocationService locationService;
 
 
+    @PreAuthorize("hasRole('admin')")
+    @PostMapping
+    public Result add(@RequestBody @Valid AddLocationRequest request) {
+        return locationService.add(request);
+    }
+
+    @PreAuthorize("hasRole('admin')")
+    @PutMapping("{id}")
+    public Result update(@Valid @RequestBody UpdateLocationRequest request) {
+        return locationService.update(request);
+    }
+
     @GetMapping("/getAll")
     public List<String> getAll() {
         return locationService.getAll();
@@ -34,19 +47,9 @@ public class LocationsController
        return locationService.getById(request);
     }
 
-    @PostMapping
-    public Result add(@RequestBody @Valid AddLocationRequest request) {
-       return locationService.add(request);
-    }
-
     @DeleteMapping("{id}")
     public Result deleteById(DeleteLocationRequest request) {
         return locationService.deleteById(request);
-    }
-
-    @PutMapping("{id}")
-    public Result update(@Valid @RequestBody UpdateLocationRequest request) {
-        return locationService.update(request);
     }
 
     @GetMapping("getByManager")

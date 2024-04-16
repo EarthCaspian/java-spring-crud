@@ -25,6 +25,16 @@ public class CustomersController
    private final CustomerService customerService;
 
 
+    @PostMapping("/add")
+    public Result add(@RequestBody @Valid AddCustomerRequest request) {
+        return customerService.add(request);
+    }
+
+    @PutMapping("{id}")
+    public Result update(@Valid @RequestBody UpdateCustomerRequest request) {
+        return customerService.update(request);
+    }
+
     @GetMapping("/getAll")
     public List<String> getAll() {
         return customerService.getAll();
@@ -35,19 +45,9 @@ public class CustomersController
         return customerService.getById(request);
     }
 
-    @PostMapping
-    public Result add(@RequestBody @Valid AddCustomerRequest request) {
-        return customerService.add(request);
-    }
-
     @DeleteMapping
     public Result deleteById(DeleteCustomerRequest request){
         return customerService.deleteById(request);
-    }
-
-    @PutMapping("{id}")
-    public Result updateById(@Valid @RequestBody UpdateCustomerRequest request) {
-        return customerService.update(request);
     }
 
     @GetMapping("nameSurname")

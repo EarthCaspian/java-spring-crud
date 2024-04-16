@@ -26,6 +26,15 @@ public class RentalsController
 {
     private final RentalService rentalService;
 
+    @PostMapping
+    public Result add(@RequestBody @Valid AddRentalRequest request) {
+        return rentalService.add(request);
+    }
+
+    @PutMapping("{id}")
+    public Result update(@Valid @RequestBody UpdateRentalRequest request) {
+        return rentalService.update(request);
+    }
 
     @GetMapping("/getAll")
     public List<GetAllRentalResponse> getAll(){
@@ -37,19 +46,9 @@ public class RentalsController
         return rentalService.getById(request);
     }
 
-    @PostMapping
-    public Result add(@RequestBody @Valid AddRentalRequest request) {
-        return rentalService.add(request);
-    }
-
     @DeleteMapping("{id}")
     public Result deleteById(DeleteRentalRequest request) {
         return rentalService.deleteById(request);
-    }
-
-    @PutMapping("{id}")
-    public Result update(@Valid @RequestBody UpdateRentalRequest request) {
-        return rentalService.update(request);
     }
 
     @GetMapping("getByDate")

@@ -22,7 +22,7 @@ public class RolesController {
 
     private final RoleService roleService;
 
-    //@PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/add")
     public RoleDto createRole(@RequestBody RoleDto roleDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

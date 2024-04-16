@@ -10,6 +10,7 @@ import com.java_spring.java_spring_crud.services.dtos.brand.requests.UpdateBrand
 import com.java_spring.java_spring_crud.services.dtos.brand.responses.GetListBrandResponse;
 import jakarta.validation.Valid;
 import lombok.Data;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,20 +24,21 @@ public class BrandsController
 
     private final BrandService brandService;
 
-
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/add")
     public Result add(@RequestBody @Valid AddBrandRequest request){
         return brandService.add(request);
     }
 
-    @GetMapping("/getAll")
-    public List<String> getAll(){
-        return brandService.getAll();
-    }
-
+    @PreAuthorize("hasRole('admin')")
     @PutMapping("{id}")
     public Result update(@RequestBody @Valid UpdateBrandRequest request) {
         return brandService.update(request);
+    }
+
+    @GetMapping("/getAll")
+    public List<String> getAll(){
+        return brandService.getAll();
     }
 
     @GetMapping("{id}")

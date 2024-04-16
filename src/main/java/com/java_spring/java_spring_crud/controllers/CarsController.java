@@ -25,6 +25,17 @@ public class CarsController
 {
     private final CarService carService;
 
+    @PreAuthorize("hasRole('admin')")
+    @PostMapping("/add")
+    public Result add(@RequestBody @Valid AddCarRequest request) {
+        return carService.add(request);
+    }
+
+    @PreAuthorize("hasRole('admin')")
+    @PutMapping("{id}")
+    public Result update(@Valid @RequestBody UpdateCarRequest request) {
+        return carService.update(request);
+    }
 
     @GetMapping("/getAll")
     public List<String> getAll() {
@@ -36,19 +47,9 @@ public class CarsController
         return carService.getById(request);
     }
 
-    @PostMapping("/add")
-    public Result add(@RequestBody @Valid AddCarRequest request) {
-       return carService.add(request);
-    }
-
     @DeleteMapping("{id}")
     public void deleteById(DeleteCarRequest request) {
         carService.deleteById(request);
-    }
-
-    @PutMapping("{id}")
-    public Result updateById(@Valid @RequestBody UpdateCarRequest request) {
-        return carService.update(request);
     }
 
     @GetMapping("contains")

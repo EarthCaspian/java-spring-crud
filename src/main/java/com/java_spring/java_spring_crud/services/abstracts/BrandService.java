@@ -15,7 +15,7 @@ public interface BrandService {
     Result update(UpdateBrandRequest request);
     List<String> getAll();
     Brand getById(GetBrandRequest request);
-    void deleteById(DeleteBrandRequest request);
+    Result deleteById(DeleteBrandRequest request);
 
     List<GetListBrandResponse> getByNameDto(String name);
 

@@ -47,8 +47,8 @@ public class BrandsController
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(DeleteBrandRequest request){
-        brandService.deleteById(request);
+    public Result deleteById(DeleteBrandRequest request){
+        return brandService.deleteById(request);
     }
 
     @GetMapping("/getByNameDto")

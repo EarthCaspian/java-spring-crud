@@ -50,6 +50,7 @@ public class RentalManager implements RentalService {
 
         rentalBusinessRule.checkStartDate(request.getStart_date());
         rentalBusinessRule.checkEndDate(request.getStart_date(),request.getEnd_date());
+        rentalBusinessRule.checkRentalPeriod(request.getStart_date(),request.getEnd_date());
 
         Rental rental = this.modelMapperService.forRequest().map(request,Rental.class);
 
@@ -78,6 +79,7 @@ public class RentalManager implements RentalService {
 
         rentalBusinessRule.checkStartDate(request.getStart_date());
         rentalBusinessRule.checkEndDate(request.getStart_date(),request.getEnd_date());
+        rentalBusinessRule.checkRentalPeriod(request.getStart_date(),request.getEnd_date());
 
         rentalBusinessRule.existsRentalById(request.getId());
 

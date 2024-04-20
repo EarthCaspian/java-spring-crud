@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @AllArgsConstructor
@@ -33,5 +34,10 @@ public class RentalBusinessRule {
         }
     }
 
+    public void checkRentalPeriod(LocalDate startDate, LocalDate endDate) {
+        if (ChronoUnit.DAYS.between(startDate, endDate) > 25) {
+            throw new BusinessException(messageService.getMessage(Messages.Rental.rentalPeriodExceeded));
+        }
+    }
 
 }

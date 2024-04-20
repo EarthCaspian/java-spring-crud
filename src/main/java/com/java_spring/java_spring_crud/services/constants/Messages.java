@@ -54,6 +54,7 @@ public class Messages {
         public static String rentalNotFoundMessage = "Rental.rentalNotFoundMessage";
         public static String rentalStartDateError = "Rental.faultyStartDate";
         public static String rentalEndDateError = "Rental.faultyEndDate";
+        public static String rentalPeriodExceeded = "Rental.rentalPeriodExceeded";
     }
 
     public static class Customer {

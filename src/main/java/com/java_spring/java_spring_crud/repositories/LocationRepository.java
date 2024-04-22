@@ -5,6 +5,7 @@ import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLoca
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
             "(l.address,l.name) from Location l where length(l.address) > :length")
     List<GetLocationByAddressLength> getByAddressLength(int length);
 
+    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM Location e WHERE LOWER(e.address) = LOWER(:address)")
+    boolean existsByAddressIgnoreCase(@Param("address") String address);
 }

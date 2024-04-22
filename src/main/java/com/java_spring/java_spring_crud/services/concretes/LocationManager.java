@@ -35,7 +35,14 @@ public class LocationManager implements LocationService {
 
     @Override
     public Result add(AddLocationRequest request) {
+
+        if (locationRepository.existsByAddressIgnoreCase(request.getAddress())){
+            System.out.println("duplicate address found.");
+            throw new BusinessException(messageService.getMessage(Messages.Location.locationAddressExists));
+        }
+
         Location location = this.modelMapperService.forRequest().map(request,Location.class);
+        location.setId(null);
         Employee employee = employeeService.getById(request.getManagerId());
         location.setManagerId(employee);
         locationRepository.save(location);

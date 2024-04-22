@@ -45,6 +45,7 @@ public class Messages {
         public static String locationUpdateSuccess = "Location.locationUpdateSuccess";
         public static String locationDeleteSuccess = "Location.locationDeleteSuccess";
         public static String locationNotFoundMessage = "Location.locationNotFoundMessage";
+        public static String locationAddressExists = "Location.locationAddressExists";
     }
 
     public static class Rental{

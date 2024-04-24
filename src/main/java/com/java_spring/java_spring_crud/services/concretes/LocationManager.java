@@ -18,6 +18,7 @@ import com.java_spring.java_spring_crud.services.dtos.location.requests.GetLocat
 import com.java_spring.java_spring_crud.services.dtos.location.requests.UpdateLocationRequest;
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByAddressLength;
 import com.java_spring.java_spring_crud.services.dtos.location.responses.GetLocationByManagerResponse;
+import com.java_spring.java_spring_crud.services.rules.LocationBusinessRule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,14 +33,12 @@ public class LocationManager implements LocationService {
     private final EmployeeService employeeService;
     private final ModelMapperService modelMapperService;
     private final MessageService messageService;
+    private final LocationBusinessRule locationBusinessRule;
 
     @Override
     public Result add(AddLocationRequest request) {
 
-        if (locationRepository.existsByAddressIgnoreCase(request.getAddress())){
-            System.out.println("duplicate address found.");
-            throw new BusinessException(messageService.getMessage(Messages.Location.locationAddressExists));
-        }
+        locationBusinessRule.checkAddress(request.getAddress());
 
         Location location = this.modelMapperService.forRequest().map(request,Location.class);
         location.setId(null);

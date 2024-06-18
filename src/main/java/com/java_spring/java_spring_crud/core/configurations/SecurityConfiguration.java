@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +43,8 @@ public class SecurityConfiguration {
             "/v3/api-docs",
             "/v3/api-docs/**",
             "/api/users/**",
-            "/api/auth/**"
+            "/api/auth/**",
+            "/h2-console/**"
     };
 
 
@@ -51,17 +53,21 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/roles/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/brands/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/cars/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/customers/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/employees/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/locations/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/rentals/**").permitAll()
+                        .requestMatchers(antMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
+                        .requestMatchers(antMatcher("/v3/api-docs/**")).permitAll()
+                        .requestMatchers(antMatcher( "/api/auth/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.POST,"/api/roles/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/brands/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/cars/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/customers/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/employees/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/locations/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/rentals/**")).permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions().disable())  // necessary to allow the H2 console to be displayed in a frame, deprecated
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

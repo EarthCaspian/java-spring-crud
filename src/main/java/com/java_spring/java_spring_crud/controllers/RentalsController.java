@@ -13,6 +13,7 @@ import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetAllRen
 import com.java_spring.java_spring_crud.services.dtos.rental.responses.GetRentalByDateResponse;
 import jakarta.validation.Valid;
 import lombok.Data;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -26,11 +27,13 @@ public class RentalsController
 {
     private final RentalService rentalService;
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping
     public Result add(@RequestBody @Valid AddRentalRequest request) {
         return rentalService.add(request);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PutMapping("{id}")
     public Result update(@Valid @RequestBody UpdateRentalRequest request) {
         return rentalService.update(request);

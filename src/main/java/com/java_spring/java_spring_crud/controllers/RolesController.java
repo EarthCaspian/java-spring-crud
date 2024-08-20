@@ -31,6 +31,7 @@ public class RolesController {
         return roleService.createRole(roleDto);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping("/delete")
     public void deleteRole(Integer id) {
         roleService.deleteRole(id);

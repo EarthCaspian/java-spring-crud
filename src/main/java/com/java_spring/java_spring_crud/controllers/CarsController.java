@@ -47,6 +47,7 @@ public class CarsController
         return carService.getById(request);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping("{id}")
     public void deleteById(DeleteCarRequest request) {
         carService.deleteById(request);

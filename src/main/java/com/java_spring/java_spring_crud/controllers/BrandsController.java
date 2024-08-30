@@ -46,6 +46,7 @@ public class BrandsController
         return brandService.getById(request);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping("{id}")
     public Result deleteById(DeleteBrandRequest request){
         return brandService.deleteById(request);

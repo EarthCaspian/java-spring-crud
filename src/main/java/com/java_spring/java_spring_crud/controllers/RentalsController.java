@@ -49,6 +49,7 @@ public class RentalsController
         return rentalService.getById(request);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping("{id}")
     public Result deleteById(DeleteRentalRequest request) {
         return rentalService.deleteById(request);
